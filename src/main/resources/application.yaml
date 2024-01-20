@@ -1,0 +1,26 @@
+#Tomcat server port number 8080
+server:
+  port: 8080
+
+#context path default value : empty
+#server.servlet.context-path=/
+
+#DB properties
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/amazoneclone?useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+# JPA properties
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#Disable open session in view
+    open-in-view: false
+
+#logging.level.org.springframework.orm.hibernate5=DEBUG
