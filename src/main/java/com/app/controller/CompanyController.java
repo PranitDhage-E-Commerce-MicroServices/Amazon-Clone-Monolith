@@ -1,16 +1,21 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.customExceptions.UnexpectedErrorException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.ResourceNotFoundException;
+import com.app.exceptions.UnexpectedErrorException;
 import com.app.pojo.Company;
 import com.app.service.ICompanyService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -36,7 +41,7 @@ public class CompanyController {
         if (company != null) {
             return new ResponseDTO(true, company);
         }
-        throw new ResourceNotFoundException("Company list not found");
+        throw new ResourceNotFoundException("Company list not found", Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @PostMapping("/add")/*---------------------------------- Admin add New Company Done*--------------------------------------*/
@@ -46,7 +51,7 @@ public class CompanyController {
         if (comp != null) {
             return new ResponseDTO(true, "Company added successfully");
         }
-        throw new UnexpectedErrorException("Error while adding new  company");
+        throw new UnexpectedErrorException("Error while adding new  company", Constants.ERR_DEFAULT);
     }
 
     @PutMapping("/update/{compId}")/*---------------------------------- Admin update Company Done*--------------------------------------*/
@@ -56,7 +61,7 @@ public class CompanyController {
         if (comp != null) {
             return new ResponseDTO(true, "Company updated successfully");
         }
-        throw new UnexpectedErrorException("Error while updating company");
+        throw new UnexpectedErrorException("Error while updating company", Constants.ERR_DEFAULT);
     }
 
     @DeleteMapping("/delete/{compId}")

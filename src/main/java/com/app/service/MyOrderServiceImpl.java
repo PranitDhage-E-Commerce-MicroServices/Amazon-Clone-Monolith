@@ -1,12 +1,19 @@
 package com.app.service;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.dao.*;
-import com.app.pojo.*;
+import com.app.dao.CartRepository;
+import com.app.dao.MyOrderRepository;
+import com.app.dao.OrderDetailsRepository;
+import com.app.dao.ProductRepository;
+import com.app.exceptions.ResourceNotFoundException;
+import com.app.pojo.Cart;
+import com.app.pojo.Myorder;
+import com.app.pojo.OrderDetails;
+import com.app.pojo.Products;
+import com.app.utils.Constants;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,7 +71,7 @@ public class MyOrderServiceImpl implements IMyOrderService {
 
                 //Reduce Product Quantity by Purchased Quantity
                 int prodId = cartItem.getProduct().getProdId();
-                Products product = productRepo.findById(prodId).orElseThrow(() -> new ResourceNotFoundException("Product not found for given Product Id"));
+                Products product = productRepo.findById(prodId).orElseThrow(() -> new ResourceNotFoundException("Product not found for given Product Id", Constants.ERR_RESOURCE_NOT_FOUND));
                 product.setProdQty(product.getProdQty() - cartItem.getCartQuantity());
                 productRepo.save(product);
 
@@ -88,7 +95,7 @@ public class MyOrderServiceImpl implements IMyOrderService {
 
     @Override
     public Myorder updateMyOrderStatus(int myOrder_id, String status) {
-            Myorder myorder = myOrderRepo.findById(myOrder_id).orElseThrow(() -> new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id));
+            Myorder myorder = myOrderRepo.findById(myOrder_id).orElseThrow(() -> new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id, Constants.ERR_RESOURCE_NOT_FOUND));
             if (status != myorder.getDeliveryStatus()) myorder.setDeliveryStatus(status);
             return myOrderRepo.save(myorder);
     }
@@ -99,7 +106,7 @@ public class MyOrderServiceImpl implements IMyOrderService {
             myOrderRepo.deleteById(myOrder_id);
             return "MyOrder deleted successfully";
         }
-        throw new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id);
+        throw new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -109,7 +116,7 @@ public class MyOrderServiceImpl implements IMyOrderService {
 
     @Override
     public String changeUserOrderDeliveryStatus(int myOrder_id, String status) {
-            Myorder myorder = myOrderRepo.findById(myOrder_id).orElseThrow(() -> new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id));
+            Myorder myorder = myOrderRepo.findById(myOrder_id).orElseThrow(() -> new ResourceNotFoundException("My Order not found for given myOrder Id : " + myOrder_id, Constants.ERR_RESOURCE_NOT_FOUND));
             myorder.setDeliveryStatus(status);
             myOrderRepo.save(myorder);
             return "User order delivery status changed successfully";

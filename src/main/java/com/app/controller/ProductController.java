@@ -1,18 +1,27 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.customExceptions.UnexpectedErrorException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.ResourceNotFoundException;
+import com.app.exceptions.UnexpectedErrorException;
 import com.app.pojo.Products;
 import com.app.service.IProductService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -45,7 +54,7 @@ public class ProductController {
         if (product != null) {
             return new ResponseDTO(true, product);
         }
-        throw new ResourceNotFoundException("Product not found for given product id");
+        throw new ResourceNotFoundException("Product not found for given product id", Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @PostMapping("/add")/*--------------------------------------------- Admin addNewProduct Done-------------------------------------------------*/
@@ -55,7 +64,7 @@ public class ProductController {
         if (prod != null) {
             return new ResponseDTO(true, "Product added successfully");
         }
-        throw new UnexpectedErrorException("Error while adding new  product");
+        throw new UnexpectedErrorException("Error while adding new  product", Constants.ERR_DEFAULT);
     }
 
     @PutMapping("/update/{prod_id}")/*--------------------------------------------- Admin updateProduct Done-------------------------------------------------*/
@@ -65,7 +74,7 @@ public class ProductController {
         if (prod != null) {
             return new ResponseDTO(true, "Product Updated successfully");
         }
-        throw new UnexpectedErrorException("Error while Updating  product");
+        throw new UnexpectedErrorException("Error while Updating  product", Constants.ERR_DEFAULT);
     }
 
     @DeleteMapping("/delete/{prod_id}")/*--------------------------------------------- Admin deleteProduct Done-------------------------------------------------*/

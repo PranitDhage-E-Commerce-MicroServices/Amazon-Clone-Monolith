@@ -1,12 +1,13 @@
 package com.app.service;
 
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dao.CategoryRepository;
+import com.app.exceptions.ResourceNotFoundException;
 import com.app.pojo.Category;
+import com.app.utils.Constants;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class CategoryServiceImpl implements ICategoryService {
             if (newCategory.getCatDescription() != "") oldCategory.setCatDescription(newCategory.getCatDescription());
             return categoryRepo.save(oldCategory);
         }
-        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id);
+        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class CategoryServiceImpl implements ICategoryService {
             categoryRepo.deleteById(cat_id);
             return "Category Deleted Successfully";
         }
-        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id);
+        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -53,6 +54,6 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public Category getCategoryDetailsById(int catId) {
-        return categoryRepo.findById(catId).orElseThrow(() -> new ResourceNotFoundException("Category not found for given category Id : " + catId));
+        return categoryRepo.findById(catId).orElseThrow(() -> new ResourceNotFoundException("Category not found for given category Id : " + catId, Constants.ERR_RESOURCE_NOT_FOUND));
     }
 }

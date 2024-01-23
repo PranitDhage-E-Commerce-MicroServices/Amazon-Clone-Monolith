@@ -4,13 +4,25 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +34,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("user_id")
+    @JsonProperty("userId")
     @Column(name = "user_id")
     private Integer userId;
 
@@ -43,7 +55,7 @@ public class User {
     private String userEmail;
 
     @JsonProperty(value = "password")
-//    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Blank or Invalid password")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[#@$*]).{5,20})", message = "Blank or Invalid password")
     @NotBlank(message = "Password can not be Blank")
     @Column(name = "user_password", length = 20, nullable = false)
     private String userPassword;
@@ -52,14 +64,14 @@ public class User {
     @Column(name = "user_status")
     private Integer userStatus;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @JsonProperty("role")
     @Column(name = "user_role", columnDefinition = "varchar(30) default 'USER'")
     private Role userRole;
 
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     @CreationTimestamp
-    @JsonProperty("signedUp_on")
+    @JsonProperty("signedUpOn")
     @Column(name = "signedUp_on", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;

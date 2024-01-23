@@ -1,16 +1,22 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.customExceptions.UnexpectedErrorException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.UnexpectedErrorException;
 import com.app.pojo.Cart;
 import com.app.service.ICartService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -37,7 +43,7 @@ public class CartController {
         if (cart != null) {
             return new ResponseDTO(true, "Product added into cart successfully");
         }
-        throw new UnexpectedErrorException("Error while adding new  product to cart");
+        throw new UnexpectedErrorException("Error while adding new  product to cart", Constants.ERR_DEFAULT);
     }
 
     @PutMapping("/update/{cart_id}/{cart_quantity}")/*--------------------------------------------User updateCartItemQty Done-----------------------------------------------*/
@@ -47,7 +53,7 @@ public class CartController {
         if (cart != null) {
             return new ResponseDTO(true, "Product Quantity updated  successfully");
         }
-        throw new UnexpectedErrorException("Error while updating cart item");
+        throw new UnexpectedErrorException("Error while updating cart item", Constants.ERR_DEFAULT);
     }
 
     @DeleteMapping("/delete/{cart_id}")/*--------------------------------------------User deleteCartItem Done-----------------------------------------------*/

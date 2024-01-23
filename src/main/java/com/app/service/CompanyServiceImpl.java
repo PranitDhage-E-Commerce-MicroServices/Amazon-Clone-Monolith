@@ -1,12 +1,13 @@
 package com.app.service;
 
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dao.CompanyRepositary;
+import com.app.exceptions.ResourceNotFoundException;
 import com.app.pojo.Company;
+import com.app.utils.Constants;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class CompanyServiceImpl implements ICompanyService {
             if (newCompany.getCompDescription() != "") oldCompany.setCompDescription(newCompany.getCompDescription());
             return companyRepo.save(oldCompany);
         }
-        throw new ResourceNotFoundException("Company not found for given comp Id : " + compId);
+        throw new ResourceNotFoundException("Company not found for given comp Id : " + compId, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class CompanyServiceImpl implements ICompanyService {
             companyRepo.deleteById(compId);
             return "Company Deleted Successfully ";
         }
-        throw new ResourceNotFoundException("Company not found for given comp Id : " + compId);
+        throw new ResourceNotFoundException("Company not found for given comp Id : " + compId, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -53,6 +54,6 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Override
     public Company getCompanyDetailsById(int compId) {
-        return companyRepo.findById(compId).orElseThrow(() -> new ResourceNotFoundException("Company not found for given comp Id : " + compId));
+        return companyRepo.findById(compId).orElseThrow(() -> new ResourceNotFoundException("Company not found for given comp Id : " + compId, Constants.ERR_RESOURCE_NOT_FOUND));
     }
 }

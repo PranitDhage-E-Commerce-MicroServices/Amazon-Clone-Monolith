@@ -1,16 +1,18 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.customExceptions.UnexpectedErrorException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.UnexpectedErrorException;
 import com.app.pojo.ProductReview;
 import com.app.service.IProductReviewService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -36,7 +38,7 @@ public class ProductReviewController {
         if (avgRating != 0) {
             return new ResponseDTO(true, avgRating);
         }
-        throw new UnexpectedErrorException(" Average  product review not found for given product");
+        throw new UnexpectedErrorException(" Average  product review not found for given product", Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @PostMapping("/add")/*-------------------------------------------------------User addNewReview Done------------------------------------------------ */
@@ -46,7 +48,7 @@ public class ProductReviewController {
         if (productReview != null) {
             return new ResponseDTO(true, "product Review added successfully");
         }
-        throw new UnexpectedErrorException("Error while adding new  product Review");
+        throw new UnexpectedErrorException("Error while adding new  product Review", Constants.ERR_DEFAULT);
     }
 
 }

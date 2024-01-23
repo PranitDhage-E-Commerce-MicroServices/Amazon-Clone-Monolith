@@ -1,12 +1,13 @@
 package com.app.service;
 
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dao.CartRepository;
+import com.app.exceptions.ResourceNotFoundException;
 import com.app.pojo.Cart;
+import com.app.utils.Constants;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public Cart updateCartItemQty(int cart_id, int item_qty) {
-        Cart oldCart = cartRepo.findById(cart_id).orElseThrow(() -> new ResourceNotFoundException("Cart Item not found for given cart Id : " + cart_id));
+        Cart oldCart = cartRepo.findById(cart_id).orElseThrow(() -> new ResourceNotFoundException("Cart Item not found for given cart Id : " + cart_id, Constants.ERR_RESOURCE_NOT_FOUND));
             if (item_qty != oldCart.getCartQuantity()) oldCart.setCartQuantity(item_qty);
             return cartRepo.save(oldCart);
         }
@@ -39,7 +40,7 @@ public class CartServiceImpl implements ICartService {
             cartRepo.deleteById(cart_id);
             return "Item deleted successfully";
         }
-        throw new ResourceNotFoundException("Cart Item not found for given cart Id : " + cart_id);
+        throw new ResourceNotFoundException("Cart Item not found for given cart Id : " + cart_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override

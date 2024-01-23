@@ -1,14 +1,15 @@
 package com.app.service;
 
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dao.AddressRepository;
 import com.app.dao.UserRepository;
+import com.app.exceptions.ResourceNotFoundException;
+import com.app.exceptions.SystemException;
 import com.app.pojo.Address;
+import com.app.utils.Constants;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class AddressServiceImpl implements IAddressService {
     UserRepository userRepo;
 
     @Override
-    public List<Address> getAllAddresses(int userId) {
+    public List<Address> getAllAddresses(int userId) throws SystemException {
         return addressRepo.findAllByUserUserId(userId);
     }
 
@@ -34,7 +35,7 @@ public class AddressServiceImpl implements IAddressService {
 
     @Override
     public Address updateAddress(int add_id, Address newAddress) {
-        Address oldAddress = addressRepo.findById(add_id).orElseThrow(() -> new ResourceNotFoundException("Address not found for given address Id : " + add_id));
+        Address oldAddress = addressRepo.findById(add_id).orElseThrow(() -> new ResourceNotFoundException("Address not found for given address Id : " + add_id, Constants.ERR_RESOURCE_NOT_FOUND));
 
         BeanUtils.copyProperties(newAddress, oldAddress);
 
@@ -52,6 +53,6 @@ public class AddressServiceImpl implements IAddressService {
             addressRepo.deleteById(add_id);
             return "Address Deleted Successfully";
         }
-        throw new ResourceNotFoundException("Address not found for given address Id : " + add_id);
+        throw new ResourceNotFoundException("Address not found for given address Id : " + add_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 }

@@ -1,13 +1,16 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.ResourceNotFoundException;
 import com.app.pojo.OrderDetails;
 import com.app.service.IOrderDetailsService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class OrderDetailsController {
         if (orderDetailsList.size() > 0) {
             return new ResponseDTO(true, orderDetailsList);
         }
-        throw new ResourceNotFoundException("order Details list not found for the given myorder id");
+        throw new ResourceNotFoundException("order Details list not found for the given myorder id", Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
 }

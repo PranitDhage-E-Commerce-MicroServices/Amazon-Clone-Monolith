@@ -1,18 +1,19 @@
 package com.app.service;
 
-import com.app.customExceptions.AuthenticationException;
-import com.app.customExceptions.ResourceNotFoundException;
 import com.app.dao.CredentialsRepository;
 import com.app.dao.UserRepository;
 import com.app.dto.SigninDTO;
+import com.app.exceptions.AuthenticationException;
+import com.app.exceptions.ResourceNotFoundException;
 import com.app.pojo.Credentials;
 import com.app.pojo.Role;
 import com.app.pojo.User;
+import com.app.utils.Constants;
 import com.app.utils.EncryptPassword;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,10 +33,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User userSign(SigninDTO signinDTO) {
-        User usr = userRepo.findByUserEmail(signinDTO.getUser_email());
-        if (usr == null) throw new AuthenticationException("Account does not exist. Please Signup");
-        User user = userRepo.findByUserEmailAndUserPassword(signinDTO.getUser_email(), EncryptPassword.getSHA256Hash(signinDTO.getUser_password()));
-        if (user == null) throw new AuthenticationException("Invalid Password. Enter Correct password");
+        User usr = userRepo.findByUserEmail(signinDTO.getUserEmail());
+        if (usr == null) throw new AuthenticationException("Account does not exist. Please Signup", Constants.ERR_AUTH);
+        User user = userRepo.findByUserEmailAndUserPassword(signinDTO.getUserEmail(), EncryptPassword.getSHA256Hash(signinDTO.getUserPassword()));
+        if (user == null) throw new AuthenticationException("Invalid Password. Enter Correct password", Constants.ERR_AUTH);
         return user;
     }
 
@@ -52,7 +53,7 @@ public class UserServiceImpl implements IUserService {
             userRepo.save(user);
             return "User Active Status Changed Successfully";
         }
-        throw new ResourceNotFoundException("User  not found for given user Id : " + user_id);
+        throw new ResourceNotFoundException("User  not found for given user Id : " + user_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User getProfile(int id) {
-        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User  not found for given user Id : " + id));
+        return userRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("User  not found for given user Id : " + id, Constants.ERR_RESOURCE_NOT_FOUND));
     }
 
     @Override
@@ -84,7 +85,7 @@ public class UserServiceImpl implements IUserService {
             if (newUser.getUserPhone() != "") user.setUserPhone(newUser.getUserPhone());
             return userRepo.save(user);
         }
-        throw new ResourceNotFoundException("User  not found for given user Id : " + id);
+        throw new ResourceNotFoundException("User  not found for given user Id : " + id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override

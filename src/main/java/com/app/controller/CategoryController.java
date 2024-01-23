@@ -1,16 +1,21 @@
 package com.app.controller;
 
-import com.app.customExceptions.ResourceNotFoundException;
-import com.app.customExceptions.UnexpectedErrorException;
 import com.app.dto.ResponseDTO;
+import com.app.exceptions.ResourceNotFoundException;
+import com.app.exceptions.UnexpectedErrorException;
 import com.app.pojo.Category;
 import com.app.service.ICategoryService;
+import com.app.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
@@ -36,7 +41,7 @@ public class CategoryController {
         if (category != null) {
             return new ResponseDTO(true, category);
         }
-        throw new ResourceNotFoundException("Category not found for given category id" + catId);
+        throw new ResourceNotFoundException("Category not found for given category id" + catId, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
 
@@ -47,7 +52,7 @@ public class CategoryController {
         if (cat != null) {
             return new ResponseDTO(true, "Category added successfully");
         }
-        throw new UnexpectedErrorException("Error while adding new  category");
+        throw new UnexpectedErrorException("Error while adding new  category", Constants.ERR_DEFAULT);
     }
 
     @PutMapping("/update/{cat_id}")/*------------------------------------------Admin updateCategory Done--------------------------------------------------------*/
@@ -57,7 +62,7 @@ public class CategoryController {
         if (cat != null) {
             return new ResponseDTO(true, "Category Updated successfully");
         }
-        throw new UnexpectedErrorException("Error while updating  category");
+        throw new UnexpectedErrorException("Error while updating  category", Constants.ERR_DEFAULT);
     }
 
     @DeleteMapping("/delete/{cat_id}")/*------------------------------------------Admin deleteCategory Done--------------------------------------------------------*/

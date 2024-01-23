@@ -6,19 +6,19 @@ import lombok.Data;
 @Data
 public class SigninDTO {
     @JsonProperty("email")
-    private String user_email;
+    private String userEmail;
 
     @JsonProperty("password")
-    private String user_password;
+    private String userPassword;
 
     public SigninDTO() {
         System.out.println("in signinDTO const");
     }
 
-    public SigninDTO(String user_email, String user_password) {
+    public SigninDTO(String userEmail, String userPassword) {
         super();
-        this.user_email = user_email;
-        this.user_password = user_password;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
     }
 
 }
