@@ -20,7 +20,23 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-#Disable open session in view
+
+#Logger Colour Output
     open-in-view: false
+  output:
+    ansi:
+      enabled: detect
 
 #logging.level.org.springframework.orm.hibernate5=DEBUG
+logging:
+  file:
+    name: "logs/app.log"
+    path: "."
+  pattern:
+    level: "[%-5level] %logger{36}.%M.[%line]"
+    dateformat: "yyyy-MM-dd HH:mm:ss"
+    correlation: "[%X{reqId}] - "
+
+# General Fields
+jdbc:
+  username: root
