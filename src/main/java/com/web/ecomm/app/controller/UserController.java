@@ -1,7 +1,7 @@
 package com.web.ecomm.app.controller;
 
 import com.web.ecomm.app.dto.APIResponseEntity;
-import com.web.ecomm.app.dto.SigninDTO;
+import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.UnexpectedErrorException;
@@ -37,11 +37,11 @@ public class UserController {
     }
 
     @PostMapping("/login")   /*--------------------------------------------- Admin/User Login Done-------------------------------------------------*/
-    public APIResponseEntity userSignin(@RequestBody SigninDTO user) throws AuthenticationException {
+    public APIResponseEntity<User> userSignin(@RequestBody SignInRequest user) throws AuthenticationException {
         log.info("inside Sign in" + user);
         User foundUser = userService.userSignIn(user);
         if (foundUser != null) {
-            return new APIResponseEntity(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, foundUser);
+            return new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, foundUser);
         }
         throw new AuthenticationException("Invalid Email or Password", Constants.ERR_AUTH);
     }

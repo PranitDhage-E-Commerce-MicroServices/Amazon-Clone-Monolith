@@ -2,7 +2,7 @@ package com.web.ecomm.app.service;
 
 import com.web.ecomm.app.dao.CredentialsRepository;
 import com.web.ecomm.app.dao.UserRepository;
-import com.web.ecomm.app.dto.SigninDTO;
+import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Credentials;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User userSignIn(SigninDTO signinDTO) throws AuthenticationException {
+    public User userSignIn(SignInRequest signinDTO) throws AuthenticationException {
         User usr = userRepo.findByEmail(signinDTO.getEmail());
         if (usr == null) throw new AuthenticationException("Account does not exist. Please Signup", Constants.ERR_AUTH);
         User user = userRepo.findByEmailAndPassword(signinDTO.getEmail(), EncryptPassword.getSHA256Hash(signinDTO.getPassword()));

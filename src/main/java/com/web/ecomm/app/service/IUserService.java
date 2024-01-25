@@ -1,6 +1,6 @@
 package com.web.ecomm.app.service;
 
-import com.web.ecomm.app.dto.SigninDTO;
+import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.User;
 
@@ -10,7 +10,7 @@ public interface IUserService {
 
     User userSignup(User u);
 
-    User userSignIn(SigninDTO user);
+    User userSignIn(SignInRequest user);
 
     User getProfile(int id);
 
