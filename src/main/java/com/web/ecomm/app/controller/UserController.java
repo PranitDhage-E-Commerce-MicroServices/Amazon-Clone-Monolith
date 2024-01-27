@@ -1,8 +1,8 @@
 package com.web.ecomm.app.controller;
 
-import com.web.ecomm.app.dto.APIResponseEntity;
-import com.web.ecomm.app.dto.AuthenticationResponse;
-import com.web.ecomm.app.dto.SignInRequest;
+import com.web.ecomm.app.models.response.APIResponseEntity;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
+import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;

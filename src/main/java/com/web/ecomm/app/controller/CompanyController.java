@@ -1,6 +1,6 @@
 package com.web.ecomm.app.controller;
 
-import com.web.ecomm.app.dto.APIResponseEntity;
+import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.UnexpectedErrorException;
 import com.web.ecomm.app.pojo.Company;

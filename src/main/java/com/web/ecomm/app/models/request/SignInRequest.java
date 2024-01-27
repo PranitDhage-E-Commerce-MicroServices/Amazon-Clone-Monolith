@@ -1,4 +1,4 @@
-package com.web.ecomm.app.dto;
+package com.web.ecomm.app.models.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

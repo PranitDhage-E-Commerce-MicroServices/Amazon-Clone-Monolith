@@ -1,6 +1,6 @@
 package com.web.ecomm.app.config;
 
-import com.web.ecomm.app.dto.APIResponseEntity;
+import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -48,8 +48,8 @@ public class ApiExceptionAspect implements ThrowsAdvice {
 
     }
 
-    @AfterThrowing(pointcut = "execution(* com.web.ecomm.app.dao.*.*(..))", throwing = "ex")
-    public void afterThrowingDao(JoinPoint joinPoint, Throwable ex)
+    @AfterThrowing(pointcut = "execution(* com.web.ecomm.app.repository.*.*(..))", throwing = "ex")
+    public void afterThrowingRepository(JoinPoint joinPoint, Throwable ex)
             throws BusinessException, SystemException {
 
         log.error("Exception : " + ex);

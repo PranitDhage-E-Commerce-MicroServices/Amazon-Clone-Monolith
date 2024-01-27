@@ -1,6 +1,6 @@
 package com.web.ecomm.app.audit;
 
-import com.web.ecomm.app.dao.AuditConfigDaoImpl;
+import com.web.ecomm.app.repository.AuditConfigRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class AuditConfig {
 
     @Autowired
-    private AuditConfigDaoImpl auditConfigDao;
+    private AuditConfigRepositoryImpl auditConfigDao;
 
 //    @Bean
 //    public AuditAspect auditAspect() {

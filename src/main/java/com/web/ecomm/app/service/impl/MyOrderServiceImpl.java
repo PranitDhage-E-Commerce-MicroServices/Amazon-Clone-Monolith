@@ -1,14 +1,15 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.CartRepository;
-import com.web.ecomm.app.dao.MyOrderRepository;
-import com.web.ecomm.app.dao.OrderDetailsRepository;
-import com.web.ecomm.app.dao.ProductRepository;
+import com.web.ecomm.app.repository.CartRepository;
+import com.web.ecomm.app.repository.MyOrderRepository;
+import com.web.ecomm.app.repository.OrderDetailsRepository;
+import com.web.ecomm.app.repository.ProductRepository;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Cart;
 import com.web.ecomm.app.pojo.Myorder;
 import com.web.ecomm.app.pojo.OrderDetails;
 import com.web.ecomm.app.pojo.Products;
+import com.web.ecomm.app.service.IMyOrderService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

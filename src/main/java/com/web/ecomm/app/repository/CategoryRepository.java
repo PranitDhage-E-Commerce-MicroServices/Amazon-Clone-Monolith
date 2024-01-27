@@ -1,4 +1,4 @@
-package com.web.ecomm.app.dao;
+package com.web.ecomm.app.repository;
 
 import com.web.ecomm.app.pojo.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

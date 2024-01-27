@@ -1,4 +1,4 @@
-package com.web.ecomm.app.dto;
+package com.web.ecomm.app.models;
 
 import jakarta.persistence.Column;
 import lombok.Data;
@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
 @ConfigurationProperties(value = "userCount, productCount, MyOrderCount, ActiveOrderCount, companyCount, categoryCount")
-public class DashboardCountDTO {
+public class DashboardCountResponse {
     @Column(name = "userCount")
     private Integer userCount = 0;
     @Column(name = "productCount")

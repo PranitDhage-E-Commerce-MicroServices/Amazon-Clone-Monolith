@@ -1,8 +1,9 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.ProductRepository;
+import com.web.ecomm.app.repository.ProductRepository;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Products;
+import com.web.ecomm.app.service.IProductService;
 import com.web.ecomm.app.utils.Constants;
 import com.web.ecomm.app.utils.ImageUploadUtils;
 import jakarta.transaction.Transactional;

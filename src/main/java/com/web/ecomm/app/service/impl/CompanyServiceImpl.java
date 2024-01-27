@@ -1,8 +1,9 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.CompanyRepositary;
+import com.web.ecomm.app.repository.CompanyRepositary;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Company;
+import com.web.ecomm.app.service.ICompanyService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

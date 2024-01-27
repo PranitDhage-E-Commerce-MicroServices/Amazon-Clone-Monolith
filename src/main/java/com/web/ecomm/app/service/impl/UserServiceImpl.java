@@ -1,10 +1,10 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.ecomm.app.dao.CredentialsRepository;
-import com.web.ecomm.app.dao.UserRepository;
-import com.web.ecomm.app.dto.AuthenticationResponse;
-import com.web.ecomm.app.dto.SignInRequest;
+import com.web.ecomm.app.repository.CredentialsRepository;
+import com.web.ecomm.app.repository.UserRepository;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
+import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
@@ -12,6 +12,7 @@ import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.security.JwtService;
+import com.web.ecomm.app.service.IUserService;
 import com.web.ecomm.app.token.Token;
 import com.web.ecomm.app.token.TokenRepository;
 import com.web.ecomm.app.token.TokenType;
@@ -65,6 +66,15 @@ public class UserServiceImpl implements IUserService {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.tokenRepository = tokenRepository;
+    }
+
+    @Override
+    public Credentials addNewAuth(Credentials credentials) throws BusinessException {
+        try {
+            return credentialsRepo.save(credentials);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
+        }
     }
 
     @Override
@@ -124,15 +134,6 @@ public class UserServiceImpl implements IUserService {
                     .refreshToken(refreshToken)
                     .build();
         } catch (AuthenticationException e) {
-            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
-        }
-    }
-
-    @Override
-    public Credentials addNewAuth(Credentials credentials) throws BusinessException {
-        try {
-            return credentialsRepo.save(credentials);
-        } catch (Exception e) {
             throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
     }

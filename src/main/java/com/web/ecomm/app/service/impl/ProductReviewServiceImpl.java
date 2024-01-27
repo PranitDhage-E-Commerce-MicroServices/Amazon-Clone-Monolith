@@ -1,7 +1,8 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.ProductReviewRepository;
+import com.web.ecomm.app.repository.ProductReviewRepository;
 import com.web.ecomm.app.pojo.ProductReview;
+import com.web.ecomm.app.service.IProductReviewService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ProductReviewServiceImpl implements IProductReviewService{
+public class ProductReviewServiceImpl implements IProductReviewService {
     @Autowired
     ProductReviewRepository reviewRepo;
 

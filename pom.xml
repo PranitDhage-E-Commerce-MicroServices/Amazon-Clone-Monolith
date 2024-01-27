@@ -166,8 +166,8 @@
                                     </limits>
                                     <excludes>
                                         <exclude>**/pojo/**.class</exclude>
-                                        <exclude>**/dto/**.class</exclude>
-                                        <exclude>**/dto/**.class</exclude>
+                                        <exclude>**/models/**.class</exclude>
+                                        <exclude>**/audit/**.class</exclude>
                                         <exclude>**/security/**.class</exclude>
                                         <exclude>**/utils/**.class</exclude>
                                         <exclude>**/config/**.class</exclude>

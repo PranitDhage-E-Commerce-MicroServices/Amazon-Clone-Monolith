@@ -1,7 +1,7 @@
 package com.web.ecomm.app.controller;
 
-import com.web.ecomm.app.dto.APIResponseEntity;
-import com.web.ecomm.app.dto.DashboardCountDTO;
+import com.web.ecomm.app.models.response.APIResponseEntity;
+import com.web.ecomm.app.models.DashboardCountResponse;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.service.ICategoryService;
 import com.web.ecomm.app.service.ICompanyService;
@@ -72,7 +72,7 @@ public class AdminController {
 
     @GetMapping("/dashboard-count") /*--------------------------------------------- Admin getAllDashboardCount Done-------------------------------------------------*/
     public APIResponseEntity getAllDashboardCount() throws BusinessException {
-        DashboardCountDTO countDTO = new DashboardCountDTO();
+        DashboardCountResponse countDTO = new DashboardCountResponse();
         countDTO.setUserCount(userService.getAllUserCount());
         countDTO.setProductCount(productService.countAllProduct());
         countDTO.setMyOrderCount(orderService.countAllUserOrders());

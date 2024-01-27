@@ -1,4 +1,4 @@
-package com.web.ecomm.app.dao;
+package com.web.ecomm.app.repository;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 @Repository
 @Getter
 @Setter
-public class AuditConfigDaoImpl {
+public class AuditConfigRepositoryImpl {
 
     @Autowired
     private DataSource dataSource;

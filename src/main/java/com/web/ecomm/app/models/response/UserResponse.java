@@ -1,4 +1,4 @@
-package com.web.ecomm.app.dto;
+package com.web.ecomm.app.models.response;
 
 import com.web.ecomm.app.pojo.Role;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserResponse {
     private Integer id;
 
     private String name;

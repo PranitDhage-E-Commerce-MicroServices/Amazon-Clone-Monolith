@@ -1,11 +1,12 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.AddressRepository;
-import com.web.ecomm.app.dao.UserRepository;
+import com.web.ecomm.app.repository.AddressRepository;
+import com.web.ecomm.app.repository.UserRepository;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.SystemException;
 import com.web.ecomm.app.pojo.Address;
+import com.web.ecomm.app.service.IAddressService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;

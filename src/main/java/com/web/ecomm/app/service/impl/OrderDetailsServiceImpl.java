@@ -1,7 +1,8 @@
-package com.web.ecomm.app.service;
+package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.dao.OrderDetailsRepository;
+import com.web.ecomm.app.repository.OrderDetailsRepository;
 import com.web.ecomm.app.pojo.OrderDetails;
+import com.web.ecomm.app.service.IOrderDetailsService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

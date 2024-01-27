@@ -1,6 +1,6 @@
 package com.web.ecomm.app.config;
 
-import com.web.ecomm.app.dao.UserRepository;
+import com.web.ecomm.app.repository.UserRepository;
 import com.web.ecomm.app.security.ApplicationAuditAware;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
