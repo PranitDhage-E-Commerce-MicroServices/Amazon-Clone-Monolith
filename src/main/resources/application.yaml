@@ -1,9 +1,8 @@
-#Tomcat server port number 8080
+#Tomcat server port number = 8080, context-path = /
 server:
   port: 8080
-
-#context path default value : empty
-#server.servlet.context-path=/
+  servlet:
+    context-path: /api/v1
 
 #DB properties
 spring:
@@ -20,6 +19,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  # Spring Security Basic Auth
+  security:
+    user.name: root
+    user.password: root
 
 #Logger Colour Output
     open-in-view: false
@@ -40,3 +46,11 @@ logging:
 # General Fields
 jdbc:
   username: root
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days

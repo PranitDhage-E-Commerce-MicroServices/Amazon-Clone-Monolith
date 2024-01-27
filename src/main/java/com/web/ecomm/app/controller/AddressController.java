@@ -62,13 +62,13 @@ public class AddressController {
             value = "/list/{userId}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<APIResponseEntity<List>> getAllAddressList(
+    public ResponseEntity<APIResponseEntity<List<Address>>> getAllAddressList(
             @Parameter(description = "User Identifier", required = true) @PathVariable("userId") String userId,
             @Parameter(description = "Unique Request Id", required = false) @RequestHeader(required = false, value = Constants.REQ_ID_KEY) String reqId
     ) throws SystemException {
 
         List<Address> allAddresses = addressService.getAllAddresses(Integer.parseInt(userId));
-        APIResponseEntity<List> APIResponseEntity = new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, allAddresses);
+        APIResponseEntity<List<Address>> APIResponseEntity = new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, allAddresses);
 
         return new ResponseEntity<>(APIResponseEntity, HttpStatus.OK);
     }

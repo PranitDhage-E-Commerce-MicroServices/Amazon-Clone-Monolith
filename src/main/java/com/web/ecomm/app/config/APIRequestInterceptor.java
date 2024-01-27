@@ -22,7 +22,6 @@ public class APIRequestInterceptor implements HandlerInterceptor {
         long start = System.currentTimeMillis();
         MDC.put(Constants.REQUEST_START_TIME, Long.toString(start));
 
-        boolean complete = false;
         log.debug("Interceptor Started at {}", start);
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames != null && headerNames.hasMoreElements()) {

@@ -1,6 +1,7 @@
 package com.web.ecomm.app.controller;
 
 import com.web.ecomm.app.dto.APIResponseEntity;
+import com.web.ecomm.app.dto.AuthenticationResponse;
 import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
@@ -59,9 +60,14 @@ class UserControllerTest extends TestCase {
                 .role(Role.USER)
                 .build();
 
-        Mockito.when(userService.userSignIn(ArgumentMatchers.any(SignInRequest.class))).thenReturn(user);
+        AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                .accessToken("")
+                .refreshToken("")
+                .build();
 
-        APIResponseEntity<User> responseEntity = userController.userSignin(signInRequest);
+        Mockito.when(userService.userSignIn(ArgumentMatchers.any(SignInRequest.class))).thenReturn(authResponse);
+
+        APIResponseEntity<AuthenticationResponse> responseEntity = userController.userSignin(signInRequest);
         assertEquals(responseEntity.getCode(), Constants.SUCCESS_CODE);
         assertEquals(responseEntity.getStatus(), Constants.STATUS_SUCCESS);
     }

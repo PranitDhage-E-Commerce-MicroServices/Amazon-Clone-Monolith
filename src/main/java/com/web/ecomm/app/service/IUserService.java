@@ -1,5 +1,6 @@
 package com.web.ecomm.app.service;
 
+import com.web.ecomm.app.dto.AuthenticationResponse;
 import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.User;
@@ -10,7 +11,7 @@ public interface IUserService {
 
     User userSignup(User u);
 
-    User userSignIn(SignInRequest user);
+    AuthenticationResponse userSignIn(SignInRequest user);
 
     User getProfile(int id);
 
