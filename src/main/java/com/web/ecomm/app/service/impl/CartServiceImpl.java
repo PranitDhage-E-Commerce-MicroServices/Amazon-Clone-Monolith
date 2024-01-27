@@ -1,8 +1,8 @@
 package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.repository.CartRepository;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Cart;
+import com.web.ecomm.app.repository.CartRepository;
 import com.web.ecomm.app.service.ICartService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
@@ -36,17 +36,17 @@ public class CartServiceImpl implements ICartService {
         }
 
     @Override
-    public String deleteCartItem(int cart_id) {
+    public boolean deleteCartItem(int cart_id) {
         if (cartRepo.existsById(cart_id)) {
             cartRepo.deleteById(cart_id);
-            return "Item deleted successfully";
+            return true;
         }
         throw new ResourceNotFoundException("Cart Item not found for given cart Id : " + cart_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
-    public String deleteAllCartItemByUser(int user_id) {
+    public boolean deleteAllCartItemByUser(int user_id) {
         cartRepo.deleteAllByUserUserId(user_id);
-        return "Deleted All items from cart";
+        return true;
     }
 }

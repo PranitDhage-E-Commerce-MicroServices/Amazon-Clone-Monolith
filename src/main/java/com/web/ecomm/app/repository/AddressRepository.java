@@ -18,7 +18,7 @@ import java.util.List;
 })
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
-    @Value("${FIND_ALL_BY_USER_USER_ID:}")
+    @Value("${ADDRESS.FIND_ALL_BY_USER_USER_ID:}")
     String FIND_ALL_BY_USER_USER_ID = "";
 
 

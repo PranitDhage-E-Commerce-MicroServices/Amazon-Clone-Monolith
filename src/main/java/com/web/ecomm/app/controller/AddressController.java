@@ -1,8 +1,8 @@
 package com.web.ecomm.app.controller;
 
-import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.pojo.Address;
 import com.web.ecomm.app.service.IAddressService;
 import com.web.ecomm.app.utils.Constants;
@@ -40,10 +40,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AddressController {
 
-    IAddressService addressService;
+    private IAddressService addressService;
 
     @Autowired
-    public AddressController(IAddressService addressService) {
+    public AddressController(final IAddressService addressService) {
         this.addressService = addressService;
     }
 
@@ -80,10 +80,13 @@ public class AddressController {
 
         List<Address> allAddresses = addressService.getAllAddresses(Integer.parseInt(userId));
 
-        APIResponseEntity<List<Address>> APIResponseEntity =
-                new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, allAddresses);
+        APIResponseEntity<List<Address>> response =
+                new APIResponseEntity<>(
+                        Constants.STATUS_SUCCESS,
+                        Constants.SUCCESS_CODE,
+                        allAddresses);
 
-        return new ResponseEntity<>(APIResponseEntity, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -91,7 +94,9 @@ public class AddressController {
      *
      * @param address Address Request Body
      * @return Saved Address
-     * @throws BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.ValidationException ValidationException
+     * @throws com.web.ecomm.app.exceptions.SystemException SystemException
      */
     @Operation(summary = "Saves new address for given user",
             description = "This API is used to save new address for the User with given userId",
@@ -111,15 +116,19 @@ public class AddressController {
             value = "/add",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public APIResponseEntity<Address> addNewAddress(
+    public ResponseEntity<APIResponseEntity<Address>> addNewAddress(
             @Parameter(description = "Address request to be added", required = true) @RequestBody Address address
     ) throws BusinessException, ValidationException {
 
         Address add = addressService.addAddress(address);
 
-        return new APIResponseEntity<>(
-                Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, add
+        APIResponseEntity<Address> response = new APIResponseEntity<>(
+                Constants.STATUS_SUCCESS,
+                Constants.SUCCESS_CODE,
+                add
         );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -145,22 +154,25 @@ public class AddressController {
             }
     )
     @PutMapping(
-            value = "/update/{add_id}",
+            value = "/update/{addId}",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public APIResponseEntity<Address> updateAddress(
-            @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "add_id") String addId,
+    public ResponseEntity<APIResponseEntity<Address>> updateAddress(
+            @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "addId") String addId,
             @Parameter(description = "Address request to be updated", required = true) @RequestBody Address address)
-            throws BusinessException {
+            throws BusinessException, SystemException {
 
         log.info("Update address for given Address Id: {}, Request: {}", addId, address);
 
         Address add = addressService.updateAddress(Integer.parseInt(addId), address);
 
-        return new APIResponseEntity<>(
-                Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, add
+        APIResponseEntity<Address> response = new APIResponseEntity<>(
+                Constants.STATUS_SUCCESS,
+                Constants.SUCCESS_CODE,
+                add
         );
 
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -185,20 +197,22 @@ public class AddressController {
             }
     )
     @DeleteMapping(
-            value = "/delete/{add_id}",
+            value = "/delete/{addId}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public APIResponseEntity<String> deleteAddress(
-            @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "add_id") String addId
+    public ResponseEntity<APIResponseEntity<String>> deleteAddress(
+            @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "addId") String addId
     ) throws BusinessException {
 
         boolean deleted = addressService.deleteAddress(Integer.parseInt(addId));
 
-        return new APIResponseEntity<>(
+        APIResponseEntity<String> response = new APIResponseEntity<>(
                 Constants.STATUS_SUCCESS,
                 Constants.SUCCESS_CODE,
                 deleted ? "Address Deleted Successfully" : "Failed to delete Address"
         );
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

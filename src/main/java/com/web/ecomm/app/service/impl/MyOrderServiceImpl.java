@@ -1,14 +1,14 @@
 package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.repository.CartRepository;
-import com.web.ecomm.app.repository.MyOrderRepository;
-import com.web.ecomm.app.repository.OrderDetailsRepository;
-import com.web.ecomm.app.repository.ProductRepository;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.pojo.Cart;
 import com.web.ecomm.app.pojo.Myorder;
 import com.web.ecomm.app.pojo.OrderDetails;
 import com.web.ecomm.app.pojo.Products;
+import com.web.ecomm.app.repository.CartRepository;
+import com.web.ecomm.app.repository.MyOrderRepository;
+import com.web.ecomm.app.repository.OrderDetailsRepository;
+import com.web.ecomm.app.repository.ProductRepository;
 import com.web.ecomm.app.service.IMyOrderService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
@@ -22,22 +22,29 @@ import java.util.List;
 @Transactional
 public class MyOrderServiceImpl implements IMyOrderService {
 
-    @Autowired
-    MyOrderRepository myOrderRepo;
+    private final MyOrderRepository myOrderRepo;
+
+    private final CartRepository cartRepo;
+
+    private final OrderDetailsRepository orderDetailsRepo;
+
+    private final ProductRepository productRepo;
 
     @Autowired
-    CartRepository cartRepo;
-
-    @Autowired
-    OrderDetailsRepository orderDetailsRepo;
-
-    @Autowired
-    ProductRepository productRepo;
+    public MyOrderServiceImpl(final MyOrderRepository myOrderRepo,
+                              final CartRepository cartRepo,
+                              final OrderDetailsRepository orderDetailsRepo,
+                              final ProductRepository productRepo) {
+        this.myOrderRepo = myOrderRepo;
+        this.cartRepo = cartRepo;
+        this.orderDetailsRepo = orderDetailsRepo;
+        this.productRepo = productRepo;
+    }
 
 
     @Override
-    public List<Myorder> getMyOrderList(int user_Id) {
-            return myOrderRepo.findAllByUserUserId(user_Id);
+    public List<Myorder> getMyOrderList(int userId) {
+            return myOrderRepo.findAllByUserUserId(userId);
     }
 
     @Override

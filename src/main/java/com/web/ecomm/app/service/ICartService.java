@@ -5,13 +5,13 @@ import com.web.ecomm.app.pojo.Cart;
 import java.util.List;
 
 public interface ICartService {
-    List<Cart> getAllCartItems(int user_id);
+    List<Cart> getAllCartItems(int userId);
 
     Cart addCartItem(Cart item);
 
-    Cart updateCartItemQty(int cart_id,  int item_qty);
+    Cart updateCartItemQty(int cartId,  int quantity);
 
-    String deleteCartItem(int cart_id);
+    boolean deleteCartItem(int cartId);
 
-    String deleteAllCartItemByUser(int user_id);
+    boolean deleteAllCartItemByUser(int userId);
 }

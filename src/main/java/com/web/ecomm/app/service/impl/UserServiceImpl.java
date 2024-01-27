@@ -1,16 +1,16 @@
 package com.web.ecomm.app.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.ecomm.app.repository.CredentialsRepository;
-import com.web.ecomm.app.repository.UserRepository;
-import com.web.ecomm.app.models.response.AuthenticationResponse;
-import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.models.request.SignInRequest;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
+import com.web.ecomm.app.repository.CredentialsRepository;
+import com.web.ecomm.app.repository.UserRepository;
 import com.web.ecomm.app.security.JwtService;
 import com.web.ecomm.app.service.IUserService;
 import com.web.ecomm.app.token.Token;
@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -34,31 +35,31 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
-    UserRepository userRepo;
+    private UserRepository userRepo;
 
-    CredentialsRepository credentialsRepo;
+    private CredentialsRepository credentialsRepo;
 
-    JwtService jwtService;
+    private JwtService jwtService;
 
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    TokenRepository tokenRepository;
+    private TokenRepository tokenRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepo,
-                           CredentialsRepository credentialsRepo,
-                           JwtService jwtService,
-                           AuthenticationManager authenticationManager,
-                           PasswordEncoder passwordEncoder,
-                           TokenRepository tokenRepository) {
+    public UserServiceImpl(final UserRepository userRepo,
+                           final CredentialsRepository credentialsRepo,
+                           final JwtService jwtService,
+                           final AuthenticationManager authenticationManager,
+                           final PasswordEncoder passwordEncoder,
+                           final TokenRepository tokenRepository) {
 
         this.userRepo = userRepo;
         this.credentialsRepo = credentialsRepo;
