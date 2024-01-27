@@ -3,6 +3,7 @@ package com.web.ecomm.app.controller;
 import com.web.ecomm.app.dto.APIResponseEntity;
 import com.web.ecomm.app.dto.AuthenticationResponse;
 import com.web.ecomm.app.dto.SignInRequest;
+import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.service.IUserService;
@@ -44,7 +45,7 @@ class UserControllerTest extends TestCase {
     }
 
     @Test
-    void userSignIn() {
+    void userSignIn() throws BusinessException {
 
         SignInRequest signInRequest = SignInRequest.builder()
                 .email("test@gmail.com")

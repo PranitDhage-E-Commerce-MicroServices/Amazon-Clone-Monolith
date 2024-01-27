@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -107,12 +105,6 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-
-        try {
-            return new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            log.error("Error in User toString : {}", e.getMessage());
-        }
 
         return "User{" +
                 "userId=" + userId +

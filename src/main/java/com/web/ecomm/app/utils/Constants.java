@@ -20,6 +20,7 @@ public interface Constants {
     String ERR_RESOURCE_NOT_FOUND = "ERR-RNF-400";
     String ERR_IO = "ERR-IO-503";
     String ERR_EXCEPTION = "ERR-EX-505";
+    String ERR_BUSINESS = "ERR-BS-5001";
 
     // Security
     public static final String SECRET = "SECRET_KEY";
@@ -27,4 +28,7 @@ public interface Constants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String TOKEN_HEADER = "Authorization";
     public static final String SIGN_UP_URL = "/";
+
+    // Date Formats
+    public static final String DATE_FORMAT_DD_MM_YYYY_HH_MM_SS = "dd-MM-yyyy HH:mm:ss";
 }

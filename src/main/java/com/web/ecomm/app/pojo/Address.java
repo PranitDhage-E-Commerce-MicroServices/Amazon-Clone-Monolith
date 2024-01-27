@@ -2,6 +2,7 @@ package com.web.ecomm.app.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -37,6 +38,7 @@ import java.util.List;
 @Table(name = "address")
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = {"user"}, allowSetters = true)  //it will not send password to client side
 public class Address {
 
     @Id

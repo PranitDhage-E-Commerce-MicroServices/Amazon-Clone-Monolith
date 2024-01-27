@@ -2,6 +2,7 @@ package com.web.ecomm.app.controller;
 
 import com.web.ecomm.app.dto.APIResponseEntity;
 import com.web.ecomm.app.dto.DashboardCountDTO;
+import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.service.ICategoryService;
 import com.web.ecomm.app.service.ICompanyService;
 import com.web.ecomm.app.service.IMyOrderService;
@@ -20,33 +21,39 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired
+    
     IUserService userService;
 
-    @Autowired
     IMyOrderService orderService;
 
-    @Autowired
     IProductService productService;
 
-    @Autowired
     ICompanyService companyService;
 
-    @Autowired
     ICategoryService categoryService;
 
-    public AdminController() {
+    @Autowired
+    public AdminController(IUserService userService, 
+                           IMyOrderService orderService, 
+                           IProductService productService, 
+                           ICompanyService companyService, 
+                           ICategoryService categoryService) {
         System.out.println("in AdminController --" + getClass().getName());
+        this.userService = userService;
+        this.orderService = orderService;
+        this.productService = productService;
+        this.companyService = companyService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/userList")/*--------------------------------------------- Admin getAllUserList Done-------------------------------------------------*/
-    public APIResponseEntity getAllUserList() {
+    public APIResponseEntity getAllUserList() throws BusinessException {
         System.out.println("in admin get all user list");
             return new APIResponseEntity(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, userService.getUsersListAll());
     }
 
     @PutMapping("/userStatus/{user_id}/{status}")/*--------------------------------------------- Admin changeUserActiveStatus Done-------------------------------------------------*/
-    public APIResponseEntity changeUserActiveStatus(@PathVariable String user_id, @PathVariable String status) {
+    public APIResponseEntity changeUserActiveStatus(@PathVariable String user_id, @PathVariable String status) throws BusinessException {
         System.out.println("in admin change user active status");
         return new APIResponseEntity(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, userService.changeUserActiveStatus(Integer.parseInt(user_id), Integer.parseInt(status)));
     }
@@ -64,7 +71,7 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard-count") /*--------------------------------------------- Admin getAllDashboardCount Done-------------------------------------------------*/
-    public APIResponseEntity getAllDashboardCount() {
+    public APIResponseEntity getAllDashboardCount() throws BusinessException {
         DashboardCountDTO countDTO = new DashboardCountDTO();
         countDTO.setUserCount(userService.getAllUserCount());
         countDTO.setProductCount(productService.countAllProduct());

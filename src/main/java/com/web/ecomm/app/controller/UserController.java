@@ -4,6 +4,7 @@ import com.web.ecomm.app.dto.APIResponseEntity;
 import com.web.ecomm.app.dto.AuthenticationResponse;
 import com.web.ecomm.app.dto.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
+import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.UnexpectedErrorException;
 import com.web.ecomm.app.pojo.User;
@@ -43,31 +44,26 @@ public class UserController {
     }
 
     @PostMapping("/login")   /*--------------------------------------------- Admin/User Login Done-------------------------------------------------*/
-    public APIResponseEntity<AuthenticationResponse> userSignin(@RequestBody SignInRequest user) throws AuthenticationException {
-        log.info("inside Sign in" + user);
+    public APIResponseEntity<AuthenticationResponse> userSignin(@RequestBody SignInRequest user)
+            throws AuthenticationException, BusinessException {
         AuthenticationResponse foundUser = userService.userSignIn(user);
-        if (foundUser != null) {
-            return new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, foundUser);
-        }
-        throw new AuthenticationException("Invalid Email or Password", Constants.ERR_AUTH);
+        return new APIResponseEntity<>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, foundUser);
     }
 
-    @PostMapping("/signup") /*--------------------------------------------- User Signup Done-------------------------------------------------*/
-    public APIResponseEntity userSignup(@RequestBody User user, BindingResult bindingResult) throws ValidationException {
+    @PostMapping("/signup")
+    public APIResponseEntity userSignup(@RequestBody User user, BindingResult bindingResult)
+            throws ValidationException, BusinessException {
         log.info("User Request Body : " + user.toString());
 
         APIUtil.validateRequestBody(bindingResult);
-        User usr = userService.userSignup(user);
-        if (usr != null) {
-            return new APIResponseEntity(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, user);
-        }
+        AuthenticationResponse authResponse = userService.userSignup(user);
 
-        throw new UnexpectedErrorException("Error While Sign up", Constants.ERR_DEFAULT);
-
+        return new APIResponseEntity(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, authResponse);
     }
 
     @GetMapping("/profile/{id}")/*--------------------------------------------- User getUserProfile Done-------------------------------------------------*/
-    public APIResponseEntity getUserProfile(@PathVariable int id) {
+    public APIResponseEntity getUserProfile(@PathVariable int id)
+            throws BusinessException {
         System.out.println("in user get profile : " + id);
         User foundUser = userService.getProfile(id);
         if (foundUser != null) {
@@ -77,7 +73,8 @@ public class UserController {
     }
 
     @PutMapping("/UpdateProfile/{id}")/*--------------------------------------------- User updateUserProfile Done-------------------------------------------------*/
-    public APIResponseEntity updateUserProfile(@PathVariable String id, @RequestBody User user) {
+    public APIResponseEntity updateUserProfile(@PathVariable String id, @RequestBody User user)
+            throws BusinessException {
         System.out.println("in user update profile : " + id);
         User updatedUser = userService.userUpdate(Integer.parseInt(id), user);
         if (updatedUser != null) {

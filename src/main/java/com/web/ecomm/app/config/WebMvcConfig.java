@@ -30,6 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(apiRequestInterceptor()).addPathPatterns(
+                "/address/**",
                 "/user/**",
                 "/orders/**",
                 "/products/**"
@@ -44,6 +45,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/address/**").allowedOrigins("https://localhost:8080", "https://127.0.0.1:8080").allowedMethods("*");
         registry.addMapping("/user/**").allowedOrigins("https://localhost:8080", "https://127.0.0.1:8080").allowedMethods("*");
         registry.addMapping("/orders/**").allowedOrigins("https://localhost:8080", "https://127.0.0.1:8080").allowedMethods("*");
         registry.addMapping("/products/**").allowedOrigins("https://localhost:8080", "https://127.0.0.1:8080").allowedMethods("*");
