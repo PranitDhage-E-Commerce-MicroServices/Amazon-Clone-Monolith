@@ -30,7 +30,8 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public List<Address> getAllAddresses(int userId) throws BusinessException {
+    public List<Address> getAllAddresses(int userId)
+            throws BusinessException {
 
         try {
             return addressRepo.findAllByUserUserId(userId);
@@ -41,7 +42,8 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public Address addAddress(Address address) throws BusinessException, ValidationException {
+    public Address addAddress(Address address)
+            throws BusinessException, ValidationException {
 
         try {
             address.setDate(new Date());

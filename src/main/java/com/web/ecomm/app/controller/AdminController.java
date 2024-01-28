@@ -222,12 +222,12 @@ public class AdminController {
 
         log.info("Change user order delivery status status for given MyOrderId: {}, Status: {}", myOrderId, status);
 
+        boolean updated = orderService.changeUserOrderDeliveryStatus(
+                Integer.parseInt(myOrderId), status);
         APIResponseEntity<String> response = new APIResponseEntity<>(
                 Constants.STATUS_SUCCESS,
                 Constants.SUCCESS_CODE,
-                orderService.changeUserOrderDeliveryStatus(
-                        Integer.parseInt(myOrderId), status
-                )
+                updated ? "Changed Delivery Status Successfully" : "Failed to Change Delivery Status"
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);
