@@ -57,7 +57,6 @@ public class AdminController {
                            final IProductService productService,
                            final ICompanyService companyService,
                            final ICategoryService categoryService) {
-        System.out.println("in AdminController --" + getClass().getName());
         this.userService = userService;
         this.orderService = orderService;
         this.productService = productService;

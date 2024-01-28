@@ -18,16 +18,16 @@ import java.util.List;
 public interface MyOrderRepository extends JpaRepository<Myorder, Integer> {
 
     @Value("${MY_ORDER.FIND_ALL_USER_ORDERS:}")
-    String FIND_ALL_USER_ORDERS = "";
+    String FIND_ALL_USER_ORDERS = "SELECT m FROM Myorder m LEFT OUTER JOIN FETCH m.user JOIN FETCH m.address";
 
     @Value("${MY_ORDER.FIND_ALL_BY_USER_USER_ID:}")
-    String FIND_ALL_BY_USER_USER_ID = "";
+    String FIND_ALL_BY_USER_USER_ID = "SELECT m FROM Myorder m LEFT OUTER JOIN FETCH m.user JOIN FETCH m.address WHERE m.user.userId = :userId";
 
     @Value("${MY_ORDER.COUNT_ALL_USER_ORDERS:}")
-    String COUNT_ALL_USER_ORDERS = "";
+    String COUNT_ALL_USER_ORDERS = "SELECT  COUNT(m) FROM Myorder m";
 
     @Value("${MY_ORDER.COUNT_ALL_ACTIVE_USER_ORDERS:}")
-    String COUNT_ALL_ACTIVE_USER_ORDERS = "";
+    String COUNT_ALL_ACTIVE_USER_ORDERS = "SELECT  COUNT(m) FROM Myorder m WHERE m.deliveryStatus NOT IN ('Cancelled', 'Delivered')";
 
     @Query(value = FIND_ALL_USER_ORDERS, nativeQuery = true)
     List<Myorder> findAllUserOrders();

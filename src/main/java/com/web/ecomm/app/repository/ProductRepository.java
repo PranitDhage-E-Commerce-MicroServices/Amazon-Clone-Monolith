@@ -17,10 +17,10 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Products, Integer> {
 
     @Value("${PRODUCT.FIND_ALL_PRODUCTS:}")
-    String FIND_ALL_PRODUCTS = "";
+    String FIND_ALL_PRODUCTS = "SELECT p FROM Products p JOIN FETCH p.category ct JOIN FETCH p.company cp";
 
     @Value("${PRODUCT.COUNT_ALL_PRODUCTS:}")
-    String COUNT_ALL_PRODUCTS = "";
+    String COUNT_ALL_PRODUCTS = "SELECT COUNT(p) FROM Products p";
 
     @Query(value = FIND_ALL_PRODUCTS, nativeQuery = true)
     List<Products> findAllProducts();

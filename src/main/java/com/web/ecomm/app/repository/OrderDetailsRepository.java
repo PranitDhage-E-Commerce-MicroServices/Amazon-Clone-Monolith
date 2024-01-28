@@ -18,7 +18,9 @@ import java.util.List;
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Integer> {
 
     @Value("${ORDER_DETAIL.FIND_ALL_BY_MY_ORDER_ID:}")
-    String FIND_ALL_BY_MY_ORDER_ID = "";
+    String FIND_ALL_BY_MY_ORDER_ID = "SELECT o FROM OrderDetails o JOIN FETCH o.myorder m " +
+            "  LEFT OUTER JOIN FETCH m.user JOIN FETCH m.address JOIN FETCH o.product p " +
+            "  JOIN FETCH p.category ct JOIN FETCH p.company cp WHERE o.myorder.myorderId = :myOrderId";
 
     @Query(value = FIND_ALL_BY_MY_ORDER_ID, nativeQuery = true)
     List<OrderDetails> findAllByMyorderMyorderId(@Param("myOrderId") int myOrderId);
