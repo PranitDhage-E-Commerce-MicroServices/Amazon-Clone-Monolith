@@ -2,6 +2,7 @@ package com.web.ecomm.app.controller;
 
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.exceptions.ValidationException;
 import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.pojo.Address;
 import com.web.ecomm.app.service.IAddressService;
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.bind.ValidationException;
 import java.util.List;
 
 @Slf4j
@@ -141,7 +141,9 @@ public class AddressController {
      * @param addId   Address Identifier
      * @param address Address Request Body
      * @return Updated Address
-     * @throws BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.ValidationException ValidationException
+     * @throws com.web.ecomm.app.exceptions.SystemException SystemException
      */
     @Operation(summary = "Updates address for given address Id",
             description = "This API is used to Updates address for given address Id",
@@ -163,8 +165,8 @@ public class AddressController {
     )
     public ResponseEntity<APIResponseEntity<Address>> updateAddress(
             @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "addId") String addId,
-            @Parameter(description = "Address request to be updated", required = true) @RequestBody Address address)
-            throws BusinessException, SystemException {
+            @Parameter(description = "Address request to be updated", required = true) @RequestBody Address address
+    ) throws BusinessException, SystemException, ValidationException {
 
         log.info("Update address for given Address Id: {}, Request: {}", addId, address);
 
@@ -184,7 +186,8 @@ public class AddressController {
      *
      * @param addId Address Identifier
      * @return Deleted Address Status
-     * @throws BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.BusinessException BusinessException
+     * @throws com.web.ecomm.app.exceptions.SystemException SystemException
      */
     @Operation(summary = "Deletes address for given address Id",
             description = "This API is used to delete address for given address Id",
@@ -206,7 +209,7 @@ public class AddressController {
     )
     public ResponseEntity<APIResponseEntity<String>> deleteAddress(
             @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "addId") String addId
-    ) throws BusinessException {
+    ) throws BusinessException, SystemException {
 
         log.info("Deleting address for given Address Id: {}", addId);
 
