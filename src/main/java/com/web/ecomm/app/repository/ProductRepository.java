@@ -22,10 +22,10 @@ public interface ProductRepository extends JpaRepository<Products, Integer> {
     @Value("${PRODUCT.COUNT_ALL_PRODUCTS:}")
     String COUNT_ALL_PRODUCTS = "SELECT COUNT(p) FROM Products p";
 
-    @Query(value = FIND_ALL_PRODUCTS, nativeQuery = true)
+    @Query(value = FIND_ALL_PRODUCTS)
     List<Products> findAllProducts();
 
-    @Query(value = COUNT_ALL_PRODUCTS, nativeQuery = true)
+    @Query(value = COUNT_ALL_PRODUCTS)
     Integer countAllProduct();
 
 }

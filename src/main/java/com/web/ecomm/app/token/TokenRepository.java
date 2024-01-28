@@ -12,12 +12,12 @@ import java.util.Optional;
 public interface TokenRepository extends JpaRepository<Token, Integer> {
 
     String FIND_ALL_VALID_TOKEN_BY_USER = """
-            SELECT t FROM Token t
-            INNER JOIN User u on t.user.userId = u.userId
-            WHERE u.userId = :id AND (t.expired = false OR t.revoked = false)
-            """;
+      select t from Token t inner join User u\s
+      on t.user.id = u.id\s
+      where u.id = :id and (t.expired = false or t.revoked = false)\s
+      """;
 
-    @Query(value = FIND_ALL_VALID_TOKEN_BY_USER, nativeQuery = true)
+    @Query(value = FIND_ALL_VALID_TOKEN_BY_USER)
     List<Token> findAllValidTokenByUser(@Param("id") Integer id);
 
     Optional<Token> findByToken(String token);

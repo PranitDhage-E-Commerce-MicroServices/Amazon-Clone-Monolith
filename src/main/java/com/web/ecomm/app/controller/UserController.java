@@ -1,18 +1,17 @@
 package com.web.ecomm.app.controller;
 
-import com.web.ecomm.app.models.response.APIResponseEntity;
-import com.web.ecomm.app.models.response.AuthenticationResponse;
-import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.UnexpectedErrorException;
+import com.web.ecomm.app.models.request.SignInRequest;
+import com.web.ecomm.app.models.response.APIResponseEntity;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.security.LogoutService;
 import com.web.ecomm.app.service.IUserService;
 import com.web.ecomm.app.utils.APIUtil;
 import com.web.ecomm.app.utils.Constants;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -63,7 +62,7 @@ public class UserController {
 
     @GetMapping("/profile/{id}")/*--------------------------------------------- User getUserProfile Done-------------------------------------------------*/
     public APIResponseEntity getUserProfile(@PathVariable int id)
-            throws BusinessException {
+            throws BusinessException, Exception {
         System.out.println("in user get profile : " + id);
         User foundUser = userService.getProfile(id);
         if (foundUser != null) {
@@ -83,10 +82,10 @@ public class UserController {
         throw new UnexpectedErrorException("Error while updating user profile", Constants.ERR_DEFAULT);
     }
 
-    @GetMapping("/logout")/*--------------------------------------------- User updateUserProfile Done-------------------------------------------------*/
-    public APIResponseEntity<String> logoutUser(HttpServletRequest request) {
-        logoutService.logout(request, null, null);
-        return new APIResponseEntity<String>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, "Logout Successful");
-    }
+//    @GetMapping("/logout")/*--------------------------------------------- User updateUserProfile Done-------------------------------------------------*/
+//    public APIResponseEntity<String> logoutUser(HttpServletRequest request) {
+//        logoutService.logout(request, null, null);
+//        return new APIResponseEntity<String>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, "Logout Successful");
+//    }
 
 }

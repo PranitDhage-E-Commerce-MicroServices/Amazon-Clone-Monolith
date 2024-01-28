@@ -1,9 +1,12 @@
 package com.web.ecomm.app.config;
 
-import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.exceptions.AuthenticationException;
+import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.exceptions.SystemException;
 import com.web.ecomm.app.exceptions.UnexpectedErrorException;
+import com.web.ecomm.app.exceptions.ValidationException;
+import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +20,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.xml.bind.ValidationException;
 import java.io.IOException;
 
 @ControllerAdvice
@@ -31,6 +33,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             IOException.class,
             ConstraintViolationException.class,
             InvalidDataAccessResourceUsageException.class,
+            BusinessException.class,
+            SystemException.class,
             Exception.class,
     })
     public ResponseEntity<?> handleAllException(Exception e, WebRequest request) {
@@ -44,44 +48,58 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                     ),
                     HttpStatus.OK
             );
-        } if (e instanceof AuthenticationException) {
+        } else if (e instanceof AuthenticationException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
                             Constants.STATUS_ERROR, e.getMessage(), ((AuthenticationException) e).getCode(), getReqId(request)
                     ),
                     HttpStatus.UNAUTHORIZED
             );
-        } if (e instanceof UnexpectedErrorException) {
+        } else if (e instanceof UnexpectedErrorException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
                             Constants.STATUS_ERROR, e.getMessage(), ((UnexpectedErrorException) e).getCode(), getReqId(request)
                     ),
                     HttpStatus.OK);
-        } if (e instanceof IOException) {
+        } else if (e instanceof IOException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
                             Constants.STATUS_ERROR, e.getMessage(), Constants.ERR_IO, getReqId(request)
                     ),
                     HttpStatus.OK
             );
-        } if (e instanceof ConstraintViolationException) {
+        } else if (e instanceof ConstraintViolationException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
                             Constants.STATUS_ERROR, e.getMessage(), Constants.ERR_IO, getReqId(request)
                     ),
                     HttpStatus.OK
             );
-        } if (e instanceof ValidationException) {
+        } else if (e instanceof InvalidDataAccessResourceUsageException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
                             Constants.STATUS_ERROR, e.getMessage(), Constants.ERR_INVALID_DATA, getReqId(request)
                     ),
                     HttpStatus.OK
             );
-        } if (e instanceof InvalidDataAccessResourceUsageException) {
+        } else if (e instanceof ValidationException) {
             return new ResponseEntity<>(
                     new APIResponseEntity<>(
-                            Constants.STATUS_ERROR, e.getMessage(), Constants.ERR_INVALID_DATA, getReqId(request)
+                            Constants.STATUS_ERROR, e.getMessage(), ((ValidationException) e).getCode(), getReqId(request)
+                    ),
+                    HttpStatus.OK
+            );
+        } else if (e instanceof BusinessException) {
+            return new ResponseEntity<>(
+                    new APIResponseEntity<>(
+                            Constants.STATUS_ERROR, e.getMessage(), ((BusinessException) e).getCode(), getReqId(request)
+                    ),
+                    HttpStatus.OK
+            );
+        } else if (e instanceof SystemException) {
+            return new ResponseEntity<>(
+                    new APIResponseEntity<>(
+                            Constants.STATUS_ERROR, e.getMessage(), ((SystemException) e).getCode(), getReqId(request)
                     ),
                     HttpStatus.OK
             );

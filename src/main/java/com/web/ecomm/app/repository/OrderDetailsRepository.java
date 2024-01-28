@@ -22,6 +22,6 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Inte
             "  LEFT OUTER JOIN FETCH m.user JOIN FETCH m.address JOIN FETCH o.product p " +
             "  JOIN FETCH p.category ct JOIN FETCH p.company cp WHERE o.myorder.myorderId = :myOrderId";
 
-    @Query(value = FIND_ALL_BY_MY_ORDER_ID, nativeQuery = true)
+    @Query(value = FIND_ALL_BY_MY_ORDER_ID)
     List<OrderDetails> findAllByMyorderMyorderId(@Param("myOrderId") int myOrderId);
 }

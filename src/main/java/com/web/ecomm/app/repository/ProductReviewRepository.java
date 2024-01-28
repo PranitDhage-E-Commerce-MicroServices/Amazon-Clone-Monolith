@@ -27,9 +27,9 @@ public interface ProductReviewRepository extends JpaRepository<ProductReview, In
     String FIND_AVERAGE_OF_PRODUCT_REVIEWS = "SELECT AVG(p.rating) FROM ProductReview p WHERE p.product.prodId = :prodId";
 
 
-    @Query(value = FIND_ALL_BY_PRODUCT_ID, nativeQuery = true)
+    @Query(value = FIND_ALL_BY_PRODUCT_ID)
     List<ProductReview> findAllByProductProdId(@Param("prodId") int prodId);
 
-    @Query(value = FIND_AVERAGE_OF_PRODUCT_REVIEWS, nativeQuery = true)
+    @Query(value = FIND_AVERAGE_OF_PRODUCT_REVIEWS)
     double getAverageOfProductReview(@Param("prodId") int prodId);
 }

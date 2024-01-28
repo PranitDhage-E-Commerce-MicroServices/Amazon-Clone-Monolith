@@ -29,16 +29,16 @@ public interface MyOrderRepository extends JpaRepository<Myorder, Integer> {
     @Value("${MY_ORDER.COUNT_ALL_ACTIVE_USER_ORDERS:}")
     String COUNT_ALL_ACTIVE_USER_ORDERS = "SELECT  COUNT(m) FROM Myorder m WHERE m.deliveryStatus NOT IN ('Cancelled', 'Delivered')";
 
-    @Query(value = FIND_ALL_USER_ORDERS, nativeQuery = true)
+    @Query(value = FIND_ALL_USER_ORDERS)
     List<Myorder> findAllUserOrders();
 
-    @Query(value = FIND_ALL_BY_USER_USER_ID, nativeQuery = true)
+    @Query(value = FIND_ALL_BY_USER_USER_ID)
     List<Myorder> findAllByUserUserId(@Param("userId") int userId);
 
-    @Query(value = COUNT_ALL_USER_ORDERS, nativeQuery = true)
+    @Query(value = COUNT_ALL_USER_ORDERS)
     Integer countAllUserOrders();
 
-    @Query(value = COUNT_ALL_ACTIVE_USER_ORDERS, nativeQuery = true)
+    @Query(value = COUNT_ALL_ACTIVE_USER_ORDERS)
     Integer countAllActiveUserOrders();
 
 }

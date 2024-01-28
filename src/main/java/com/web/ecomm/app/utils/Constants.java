@@ -21,6 +21,7 @@ public interface Constants {
     String ERR_IO = "ERR-IO-503";
     String ERR_EXCEPTION = "ERR-EX-505";
     String ERR_BUSINESS = "ERR-BS-5001";
+    String ERR_UNEXPECTED = "ERR-BS-5001";
 
     // Security
     public static final String SECRET = "SECRET_KEY";

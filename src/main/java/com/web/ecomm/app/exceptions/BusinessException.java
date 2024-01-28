@@ -25,7 +25,7 @@ public class BusinessException extends Exception {
     @Setter
     private String message = "";
 
-    public BusinessException(String code, String message) {
+    public BusinessException(String message, String code) {
         this.code = code;
         this.message = message;
     }

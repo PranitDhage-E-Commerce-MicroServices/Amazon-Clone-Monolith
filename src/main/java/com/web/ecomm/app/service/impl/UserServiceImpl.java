@@ -173,14 +173,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User getProfile(int id) throws BusinessException {
+    public User getProfile(int id) throws BusinessException, Exception {
         try {
             return userRepo.findById(id)
                     .orElseThrow(() ->
-                            new ResourceNotFoundException("User  not found for given user Id : " + id,
+                            new ResourceNotFoundException(
+                                    "User  not found for given user Id : " + id,
                                     Constants.ERR_RESOURCE_NOT_FOUND)
                     );
         } catch (ResourceNotFoundException e) {
+            log.info("User not found for given user Id : {}", id);
+            throw new BusinessException(e.getMessage(), e.getCode());
+        } catch (Exception e) {
+            log.info("Exception occurred while getting User Profile for User Id: {}", id);
             throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
     }

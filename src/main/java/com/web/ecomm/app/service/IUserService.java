@@ -1,9 +1,9 @@
 package com.web.ecomm.app.service;
 
-import com.web.ecomm.app.models.response.AuthenticationResponse;
-import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.models.request.SignInRequest;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.User;
 
@@ -17,7 +17,7 @@ public interface IUserService {
 
     AuthenticationResponse userSignIn(SignInRequest user) throws  BusinessException, ResourceNotFoundException;
 
-    User getProfile(int id) throws BusinessException;
+    User getProfile(int id) throws BusinessException, Exception;
 
     User userUpdate(int id, User u) throws  BusinessException, ResourceNotFoundException;
 
