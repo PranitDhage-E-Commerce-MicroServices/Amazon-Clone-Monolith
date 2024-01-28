@@ -21,7 +21,6 @@ public interface AddressRepository extends JpaRepository<Address, Integer> {
     @Value("${ADDRESS.FIND_ALL_BY_USER_USER_ID:}")
     String FIND_ALL_BY_USER_USER_ID = "";
 
-
     @Query(value = FIND_ALL_BY_USER_USER_ID, nativeQuery = true)
     List<Address> findAllByUserUserId(@Param("userId") int userId) throws SystemException;
 
