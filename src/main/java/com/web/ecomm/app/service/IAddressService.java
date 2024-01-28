@@ -3,6 +3,7 @@ package com.web.ecomm.app.service;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
 import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.exceptions.ValidationException;
 import com.web.ecomm.app.pojo.Address;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public interface IAddressService {
      * @return Saved Address
      * @throws BusinessException BusinessException
      */
-    Address addAddress(Address address) throws BusinessException;
+    Address addAddress(Address address) throws BusinessException, ValidationException;
 
     /**
      * Updates address for given address Id
@@ -36,7 +37,7 @@ public interface IAddressService {
      * @return Updated Address
      * @throws BusinessException BusinessException
      */
-    Address updateAddress(int addId, Address address) throws BusinessException;
+    Address updateAddress(int addId, Address address) throws BusinessException, ValidationException;
 
     /**
      * Deletes address for given address Id

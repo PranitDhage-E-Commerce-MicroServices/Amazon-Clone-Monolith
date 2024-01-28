@@ -2,13 +2,14 @@ package com.web.ecomm.app.service.impl;
 
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
-import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.exceptions.ValidationException;
 import com.web.ecomm.app.pojo.Address;
 import com.web.ecomm.app.repository.AddressRepository;
 import com.web.ecomm.app.service.IAddressService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,14 +34,14 @@ public class AddressServiceImpl implements IAddressService {
 
         try {
             return addressRepo.findAllByUserUserId(userId);
-        } catch (SystemException e) {
+        } catch (Exception e) {
             log.error("Exception While Getting All Address for Given User Id : {}, Message: {}", userId, e.getMessage());
             throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
     }
 
     @Override
-    public Address addAddress(Address address) throws BusinessException {
+    public Address addAddress(Address address) throws BusinessException, ValidationException {
 
         try {
             address.setDate(new Date());
@@ -52,23 +53,32 @@ public class AddressServiceImpl implements IAddressService {
     }
 
     @Override
-    public Address updateAddress(int add_id, Address newAddress)
-            throws ResourceNotFoundException, BusinessException {
+    public Address updateAddress(int addId, Address newAddress)
+            throws ResourceNotFoundException, BusinessException, ValidationException {
 
         try {
 
-            Address oldAddress = addressRepo.findById(add_id)
+            Address oldAddress = addressRepo.findById(addId)
                     .orElseThrow(
                             () -> new ResourceNotFoundException(
-                                    "Address not found for given address Id : " + add_id,
+                                    "Address not found for given address Id : " + addId,
                                     Constants.ERR_RESOURCE_NOT_FOUND)
                     );
 
-            if (newAddress.getAddress() != null) oldAddress.setAddress(newAddress.getAddress());
-            if (newAddress.getCity() != null) oldAddress.setCity(newAddress.getCity());
-            if (newAddress.getState() != null) oldAddress.setState(newAddress.getState());
-            if (newAddress.getCountry() != null) oldAddress.setCountry(newAddress.getCountry());
-            if (newAddress.getPin() != null) oldAddress.setPin(newAddress.getPin());
+            if (StringUtils.isNotBlank(newAddress.getAddress()))
+                oldAddress.setAddress(newAddress.getAddress());
+
+            if (StringUtils.isNotBlank(newAddress.getCity()))
+                oldAddress.setCity(newAddress.getCity());
+
+            if (StringUtils.isNotBlank(newAddress.getState()))
+                oldAddress.setState(newAddress.getState());
+
+            if (StringUtils.isNotBlank(newAddress.getCountry()))
+                oldAddress.setCountry(newAddress.getCountry());
+
+            if (StringUtils.isNotBlank(newAddress.getPin()))
+                oldAddress.setPin(newAddress.getPin());
 
             return addressRepo.save(oldAddress);
 

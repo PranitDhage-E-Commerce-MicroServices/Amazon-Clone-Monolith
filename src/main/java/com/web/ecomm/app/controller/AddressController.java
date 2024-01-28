@@ -78,6 +78,8 @@ public class AddressController {
             @Parameter(description = "Unique Request Id", required = false) @RequestHeader(required = false, value = Constants.REQ_ID_KEY) String reqId
     ) throws BusinessException, SystemException {
 
+        log.info("Getting all addresses for given User Id: {}", userId);
+
         List<Address> allAddresses = addressService.getAllAddresses(Integer.parseInt(userId));
 
         APIResponseEntity<List<Address>> response =
@@ -118,7 +120,9 @@ public class AddressController {
     )
     public ResponseEntity<APIResponseEntity<Address>> addNewAddress(
             @Parameter(description = "Address request to be added", required = true) @RequestBody Address address
-    ) throws BusinessException, ValidationException {
+    ) throws BusinessException, ValidationException, SystemException {
+
+        log.info("Adding new address Request: {}", address);
 
         Address add = addressService.addAddress(address);
 
@@ -203,6 +207,8 @@ public class AddressController {
     public ResponseEntity<APIResponseEntity<String>> deleteAddress(
             @Parameter(description = "Address Identifier", required = true) @PathVariable(value = "addId") String addId
     ) throws BusinessException {
+
+        log.info("Deleting address for given Address Id: {}", addId);
 
         boolean deleted = addressService.deleteAddress(Integer.parseInt(addId));
 

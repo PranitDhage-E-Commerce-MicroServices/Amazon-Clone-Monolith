@@ -1,60 +1,125 @@
 package com.web.ecomm.app.service.impl;
 
-import com.web.ecomm.app.repository.CategoryRepository;
+import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.exceptions.ValidationException;
 import com.web.ecomm.app.pojo.Category;
+import com.web.ecomm.app.repository.CategoryRepository;
 import com.web.ecomm.app.service.ICategoryService;
 import com.web.ecomm.app.utils.Constants;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @Transactional
 public class CategoryServiceImpl implements ICategoryService {
 
+    private final CategoryRepository categoryRepo;
+
     @Autowired
-    CategoryRepository categoryRepo;
-
-    @Override
-    public List<Category> getAllCategories() {
-        return categoryRepo.findAll();
+    public CategoryServiceImpl(final CategoryRepository categoryRepo) {
+        this.categoryRepo = categoryRepo;
     }
 
     @Override
-    public Category addCategory(Category category) {
-        return categoryRepo.save(category);
+    public List<Category> getAllCategories()
+            throws SystemException, BusinessException {
+
+        try {
+            return categoryRepo.findAll();
+        } catch (Exception e) {
+            log.error("Exception While Getting All Categories for Admin - Message: {}", e.getMessage());
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
+        }
     }
 
     @Override
-    public Category updateCategory(int cat_id, Category newCategory) {
-        if (categoryRepo.existsById(cat_id)) {
-            Category oldCategory = categoryRepo.findById(cat_id).get();
-            if (newCategory.getCatTitle() != "") oldCategory.setCatTitle(newCategory.getCatTitle());
-            if (newCategory.getCatDescription() != "") oldCategory.setCatDescription(newCategory.getCatDescription());
+    public Category getCategoryDetailsById(int catId)
+            throws SystemException, BusinessException {
+
+        try {
+            return categoryRepo.findById(catId)
+                    .orElseThrow(
+                            () -> new ResourceNotFoundException(
+                                    "Category not found for given category Id : " + catId,
+                                    Constants.ERR_RESOURCE_NOT_FOUND
+                            )
+                    );
+        } catch (ResourceNotFoundException e) {
+            log.error("Exception While getting Category By Id: {}, Message {}", catId, e.getMessage());
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
+        }
+    }
+
+    @Override
+    public Category addCategory(Category category)
+            throws SystemException, BusinessException, ValidationException {
+
+        try {
+            return categoryRepo.save(category);
+        } catch (Exception e) {
+            log.error("Exception While Saving Category: {}", e.getMessage());
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
+        }
+    }
+
+    @Override
+    public Category updateCategory(int catId, Category newCategory)
+            throws SystemException, BusinessException, ValidationException {
+
+        try {
+
+            Category oldCategory = categoryRepo.findById(catId)
+                    .orElseThrow(
+                            () -> new ResourceNotFoundException(
+                                    "Category not found for given Category Id : " + catId,
+                                    Constants.ERR_RESOURCE_NOT_FOUND)
+                    );
+
+            if (StringUtils.isNotBlank(newCategory.getCatTitle()))
+                oldCategory.setCatTitle(newCategory.getCatTitle());
+
+            if (StringUtils.isNotBlank(newCategory.getCatDescription()))
+                oldCategory.setCatDescription(newCategory.getCatDescription());
+
             return categoryRepo.save(oldCategory);
+
+        } catch (ResourceNotFoundException e) {
+            log.error("Exception While Updating Address: {}", e.getMessage());
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
-        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id, Constants.ERR_RESOURCE_NOT_FOUND);
     }
 
     @Override
-    public String deleteCategory(int cat_id) {
-        if (categoryRepo.existsById(cat_id)) {
-            categoryRepo.deleteById(cat_id);
-            return "Category Deleted Successfully";
+    public boolean deleteCategory(int catId)
+            throws SystemException, BusinessException {
+
+        if (!categoryRepo.existsById(catId)) {
+            throw new ResourceNotFoundException(
+                    "Category not found for given Category Id : " + catId,
+                    Constants.ERR_RESOURCE_NOT_FOUND);
         }
-        throw new ResourceNotFoundException("Category not found for given cat Id : " + cat_id, Constants.ERR_RESOURCE_NOT_FOUND);
+
+        categoryRepo.deleteById(catId);
+        return true;
     }
 
     @Override
-    public Integer countAllCategory() {
-        return categoryRepo.findAll().size();
-    }
+    public Integer countAllCategory()
+            throws SystemException, BusinessException {
 
-    @Override
-    public Category getCategoryDetailsById(int catId) {
-        return categoryRepo.findById(catId).orElseThrow(() -> new ResourceNotFoundException("Category not found for given category Id : " + catId, Constants.ERR_RESOURCE_NOT_FOUND));
+        try {
+            return categoryRepo.findAll().size();
+        } catch (Exception e) {
+            log.error("Exception While Getting Count of All Categories: {}", e.getMessage());
+            throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
+        }
     }
 }
