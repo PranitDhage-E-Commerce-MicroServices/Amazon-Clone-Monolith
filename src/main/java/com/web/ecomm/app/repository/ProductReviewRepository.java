@@ -23,7 +23,7 @@ public interface ProductReviewRepository extends JpaRepository<ProductReview, In
             "JOIN FETCH r.product p JOIN FETCH p.category ct JOIN FETCH p.company cp " +
             "WHERE r.product.prodId = :prodId";
 
-    @Value("${REVIEW.FIND_ALL_BY_PRODUCT_ID:}")
+    @Value("${REVIEW.FIND_AVERAGE_OF_PRODUCT_REVIEWS:}")
     String FIND_AVERAGE_OF_PRODUCT_REVIEWS = "SELECT AVG(p.rating) FROM ProductReview p WHERE p.product.prodId = :prodId";
 
 
