@@ -20,7 +20,7 @@ public interface CartRepository extends JpaRepository<Cart, Integer> {
     @Value("${CART.FIND_ALL_BY_USER_USER_ID:}")
     String FIND_ALL_BY_USER_USER_ID = "";
 
-    @Query(value = FIND_ALL_BY_USER_USER_ID)
+    @Query(value = FIND_ALL_BY_USER_USER_ID, nativeQuery = true)
     List<Cart> findAllByUserUserId(@Param("userId") int userId);
 
     void deleteAllByUserUserId( int userId);
