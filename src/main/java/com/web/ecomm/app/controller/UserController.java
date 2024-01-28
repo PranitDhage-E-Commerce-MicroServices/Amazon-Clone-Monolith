@@ -12,6 +12,7 @@ import com.web.ecomm.app.security.LogoutService;
 import com.web.ecomm.app.service.IUserService;
 import com.web.ecomm.app.utils.APIUtil;
 import com.web.ecomm.app.utils.Constants;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -82,10 +83,10 @@ public class UserController {
         throw new UnexpectedErrorException("Error while updating user profile", Constants.ERR_DEFAULT);
     }
 
-//    @GetMapping("/logout")/*--------------------------------------------- User updateUserProfile Done-------------------------------------------------*/
-//    public APIResponseEntity<String> logoutUser(HttpServletRequest request) {
-//        logoutService.logout(request, null, null);
-//        return new APIResponseEntity<String>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, "Logout Successful");
-//    }
+    @GetMapping("/logout")/*--------------------------------------------- User updateUserProfile Done-------------------------------------------------*/
+    public APIResponseEntity<String> logoutUser(HttpServletRequest request) {
+        logoutService.logout(request, null, null);
+        return new APIResponseEntity<String>(Constants.STATUS_SUCCESS, Constants.SUCCESS_CODE, "Logout Successful");
+    }
 
 }
