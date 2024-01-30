@@ -137,12 +137,13 @@ public class AdminController {
 
         log.info("Changing User Active Status for given User Id: {} and Status: {}", userId, status);
 
+        boolean changed = userService.changeUserActiveStatus(
+                Integer.parseInt(userId), Integer.parseInt(status)
+        );
         APIResponseEntity<String> response = new APIResponseEntity<>(
                 Constants.STATUS_SUCCESS,
                 Constants.SUCCESS_CODE,
-                userService.changeUserActiveStatus(
-                        Integer.parseInt(userId), Integer.parseInt(status)
-                )
+                changed ? "User Active Status Changed Successfully" : "Failed to Change User Active Status"
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);

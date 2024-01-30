@@ -1,9 +1,10 @@
 package com.web.ecomm.app.controller;
 
+import com.web.ecomm.app.exceptions.BusinessException;
+import com.web.ecomm.app.exceptions.SystemException;
+import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.models.response.APIResponseEntity;
 import com.web.ecomm.app.models.response.AuthenticationResponse;
-import com.web.ecomm.app.models.request.SignInRequest;
-import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.service.IUserService;
@@ -20,6 +21,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
 @Slf4j
 @RunWith(MockitoJUnitRunner.class)
@@ -45,7 +47,7 @@ class UserControllerTest extends TestCase {
     }
 
     @Test
-    void userSignIn() throws BusinessException {
+    void userSignIn() throws BusinessException, SystemException {
 
         SignInRequest signInRequest = SignInRequest.builder()
                 .email("test@gmail.com")
@@ -68,9 +70,12 @@ class UserControllerTest extends TestCase {
 
         Mockito.when(userService.userSignIn(ArgumentMatchers.any(SignInRequest.class))).thenReturn(authResponse);
 
-        APIResponseEntity<AuthenticationResponse> responseEntity = userController.userSignin(signInRequest);
-        assertEquals(responseEntity.getCode(), Constants.SUCCESS_CODE);
-        assertEquals(responseEntity.getStatus(), Constants.STATUS_SUCCESS);
+        ResponseEntity<APIResponseEntity<AuthenticationResponse>> response =
+                userController.userSignIn(signInRequest);
+        APIResponseEntity<AuthenticationResponse> responseBody = response.getBody();
+        assertNotNull(responseBody);
+        assertEquals(responseBody.getCode(), Constants.SUCCESS_CODE);
+        assertEquals(responseBody.getStatus(), Constants.STATUS_SUCCESS);
     }
 
     @Test

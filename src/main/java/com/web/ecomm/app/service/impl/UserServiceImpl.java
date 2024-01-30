@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.ecomm.app.exceptions.AuthenticationException;
 import com.web.ecomm.app.exceptions.BusinessException;
 import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.exceptions.SystemException;
 import com.web.ecomm.app.models.request.SignInRequest;
 import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
@@ -140,8 +141,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public String changeUserActiveStatus(int userId, int status)
-            throws BusinessException, ResourceNotFoundException {
+    public boolean changeUserActiveStatus(int userId, int status)
+            throws BusinessException, SystemException, ResourceNotFoundException {
 
         try {
 
@@ -153,15 +154,15 @@ public class UserServiceImpl implements IUserService {
 
             user.setStatus(status);
             userRepo.save(user);
-            return "User Active Status Changed Successfully";
 
+            return true;
         } catch (Exception e) {
             throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
     }
 
     @Override
-    public Integer getAllUserCount() throws BusinessException {
+    public Integer getAllUserCount() throws BusinessException, SystemException {
         try {
             return userRepo.findAll()
                     .stream()
