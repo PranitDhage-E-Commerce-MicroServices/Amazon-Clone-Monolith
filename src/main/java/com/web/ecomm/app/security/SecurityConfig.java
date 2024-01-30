@@ -1,5 +1,6 @@
 package com.web.ecomm.app.security;
 
+import com.web.ecomm.app.config.ApplicationConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,15 +33,16 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html"};
-    JwtAuthenticationFilter jwtAuthFilter;
+
+    ApplicationConfig applicationConfig;
 
     AuthenticationProvider authenticationProvider;
 
     LogoutHandler logoutHandler;
 
     @Autowired
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
-        this.jwtAuthFilter = jwtAuthFilter;
+    public SecurityConfig(ApplicationConfig applicationConfig, AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
+        this.applicationConfig = applicationConfig;
         this.authenticationProvider = authenticationProvider;
         this.logoutHandler = logoutHandler;
     }
@@ -60,9 +62,16 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(
+                        session -> session.sessionCreationPolicy(STATELESS)
+                )
+                .authenticationProvider(
+                        authenticationProvider
+                )
+                .addFilterBefore(
+                        applicationConfig.jwtAuthenticationFilter(),
+                        UsernamePasswordAuthenticationFilter.class
+                )
                 .logout(logout ->
                         logout.logoutUrl("/api/v1/user/logout")
                                 .addLogoutHandler(logoutHandler)

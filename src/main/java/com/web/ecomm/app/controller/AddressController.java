@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,7 +120,7 @@ public class AddressController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<APIResponseEntity<Address>> addNewAddress(
-            @Parameter(description = "Address request to be added", required = true) @RequestBody Address address
+            @Parameter(description = "Address request to be added", required = true) @RequestBody @Valid Address address
     ) throws BusinessException, ValidationException, SystemException {
 
         log.info("Adding new address Request: {}", address);

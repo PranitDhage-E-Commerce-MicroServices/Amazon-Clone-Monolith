@@ -123,7 +123,7 @@ public class UserServiceImpl implements IUserService {
                             .orElseThrow(
                                     () -> new AuthenticationException(
                                             "Account does not exist. Please Signup",
-                                            Constants.ERR_AUTH)))
+                                            Constants.ERR_AUTHENTICATION)))
                     .get();
 
             String jwtToken = jwtService.generateToken(user);
