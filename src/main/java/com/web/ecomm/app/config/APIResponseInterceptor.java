@@ -29,12 +29,14 @@ public class APIResponseInterceptor implements ResponseBodyAdvice<Object> {
                                   ServerHttpRequest request, ServerHttpResponse response) {
 
         String reqId = request.getHeaders().getFirst(Constants.REQ_ID_KEY);
+        String message = null;
 
         if (body instanceof APIResponseEntity<?>) {
             APIResponseEntity responseEntity = (APIResponseEntity) body;
 
             String code = responseEntity.getCode();
             String status = responseEntity.getStatus();
+            message = responseEntity.getMessage();
 
             if (StringUtils.equals(status, Constants.STATUS_SUCCESS) && StringUtils.equals(code, Constants.SUCCESS_CODE)) {
                 if (StringUtils.isBlank(reqId)) {
@@ -44,18 +46,19 @@ public class APIResponseInterceptor implements ResponseBodyAdvice<Object> {
                 if (!StringUtils.isBlank(reqId)) {
                     responseEntity.setReqId(reqId);
                 }
-                responseEntity.setMessage(Constants.STATUS_SUCCESS);
                 responseEntity.setCode(Constants.SUCCESS_CODE);
-                body = responseEntity;
             }
         }
 
         String requestStartTime = MDC.get(Constants.REQUEST_START_TIME);
+        String requestURI = request.getURI().toString();
+
         if (StringUtils.isNumeric(requestStartTime)) {
-            String requestURI = request.getURI().toString();
-            long startTime = Long.valueOf(requestStartTime);
+            long startTime = Long.parseLong(requestStartTime);
             long endTime = System.currentTimeMillis();
-            log.info("URI: {}, Total Request Time: {}, (ms)", requestURI, endTime - startTime);
+            log.info("URI: {}, Total Request Time: {} (ms), Message: {}", requestURI, endTime - startTime, message);
+        } else {
+            log.info("URI: {}, Message: {} ", requestURI, message);
         }
 
         MDC.clear();

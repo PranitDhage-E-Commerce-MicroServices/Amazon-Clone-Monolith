@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findAllByRole(Role role);
 
-    @Query(value = GET_ALL_COUNT)
-    Object getAllCount();
+//    @Query(value = GET_ALL_COUNT)
+//    Object getAllCount();
 
 }
