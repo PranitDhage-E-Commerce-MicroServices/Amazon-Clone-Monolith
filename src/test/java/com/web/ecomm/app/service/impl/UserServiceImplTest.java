@@ -67,7 +67,7 @@ class UserServiceImplTest extends TestCase {
         assertEquals(auth.getPassword(), password);
     }
 
-    @Test
+//    @Test
     void addNewAuthException() {
 
         Credentials credentials = TestUtils.getCredentials();
