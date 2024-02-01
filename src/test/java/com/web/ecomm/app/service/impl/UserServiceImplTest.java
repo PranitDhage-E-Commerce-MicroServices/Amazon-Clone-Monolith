@@ -1,10 +1,15 @@
 package com.web.ecomm.app.service.impl;
 
 import com.web.ecomm.app.exceptions.BusinessException;
+import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
+import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.repository.CredentialsRepository;
 import com.web.ecomm.app.repository.UserRepository;
+import com.web.ecomm.app.security.JwtService;
+import com.web.ecomm.app.testutils.TestConstants;
 import com.web.ecomm.app.testutils.TestUtils;
+import com.web.ecomm.app.token.TokenRepository;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +21,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -30,6 +40,18 @@ class UserServiceImplTest extends TestCase {
 
     @Mock
     CredentialsRepository credentialsRepo;
+
+    @Mock
+    private JwtService jwtService;
+
+    @Mock
+    private AuthenticationManager authenticationManager;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @Mock
+    private TokenRepository tokenRepository;
 
     @BeforeEach
     @Override
@@ -48,9 +70,6 @@ class UserServiceImplTest extends TestCase {
     void addNewAuth() throws BusinessException {
 
         Credentials credentials = TestUtils.getCredentials();
-        Integer userId = 1;
-        String email = "test@gmail.com";
-        String password = "Password@12345";
 
         Mockito.when(
                         credentialsRepo.save(
@@ -62,9 +81,9 @@ class UserServiceImplTest extends TestCase {
         Credentials auth = userService.addNewAuth(credentials);
 
         assertNotNull(auth);
-        assertEquals(auth.getUserId(), userId);
-        assertEquals(auth.getEmail(), email);
-        assertEquals(auth.getPassword(), password);
+        assertEquals(auth.getUserId(), TestConstants.USER_ID);
+        assertEquals(auth.getEmail(), TestConstants.EMAIL);
+        assertEquals(auth.getPassword(), TestConstants.PASSWORD);
     }
 
 //    @Test
@@ -82,7 +101,34 @@ class UserServiceImplTest extends TestCase {
     }
 
     @Test
-    void userSignup() {
+    void userSignup() throws BusinessException {
+
+        User user = TestUtils.getUser();
+
+        Mockito.when(passwordEncoder.encode(ArgumentMatchers.anyString()))
+                .thenReturn(TestConstants.ENCODE);
+
+        Mockito.when(userRepo.save(ArgumentMatchers.any(User.class)))
+                .thenReturn(user);
+
+        Mockito.when(jwtService.generateToken(ArgumentMatchers.any(User.class)))
+                .thenReturn(TestConstants.ACCESS_TOKEN);
+
+        Mockito.when(jwtService.generateRefreshToken(ArgumentMatchers.any(User.class)))
+                .thenReturn(TestConstants.REFRESH_TOKEN);
+
+        Mockito.when(tokenRepository.findAllValidTokenByUser(TestConstants.USER_ID))
+                .thenReturn(new ArrayList<>());
+
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+                .thenReturn(new ArrayList<>());
+
+        AuthenticationResponse response = userService.userSignup(user);
+
+        assertNotNull(response);
+        assertEquals(response.getAccessToken(), TestConstants.ACCESS_TOKEN);
+        assertEquals(response.getRefreshToken(), TestConstants.REFRESH_TOKEN);
+
     }
 
     @Test

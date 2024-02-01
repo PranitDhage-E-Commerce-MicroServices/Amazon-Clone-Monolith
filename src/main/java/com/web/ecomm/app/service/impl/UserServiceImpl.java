@@ -242,7 +242,8 @@ public class UserServiceImpl implements IUserService {
     private void revokeAllUserTokens(User user) throws BusinessException {
 
         try {
-            var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
+
+            List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
 
             if (validUserTokens.isEmpty())
                 return;

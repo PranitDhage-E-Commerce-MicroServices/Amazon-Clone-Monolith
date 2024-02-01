@@ -8,6 +8,7 @@ import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.security.LogoutService;
 import com.web.ecomm.app.service.IUserService;
+import com.web.ecomm.app.testutils.TestConstants;
 import com.web.ecomm.app.testutils.TestUtils;
 import com.web.ecomm.app.utils.Constants;
 import junit.framework.TestCase;
@@ -66,7 +67,7 @@ class UserControllerTest extends TestCase {
         assertNotNull(responseBody);
         assertEquals(responseBody.getCode(), Constants.SUCCESS_CODE);
         assertEquals(responseBody.getStatus(), Constants.STATUS_SUCCESS);
-        assertEquals(responseBody.getData().getAccessToken(), TestUtils.ACCESS_TOKEN);
+        assertEquals(responseBody.getData().getAccessToken(), TestConstants.ACCESS_TOKEN);
     }
 
     @Test
@@ -84,7 +85,7 @@ class UserControllerTest extends TestCase {
         assertNotNull(responseBody);
         assertEquals(responseBody.getCode(), Constants.SUCCESS_CODE);
         assertEquals(responseBody.getStatus(), Constants.STATUS_SUCCESS);
-        assertEquals(responseBody.getData().getAccessToken(), TestUtils.ACCESS_TOKEN);
+        assertEquals(responseBody.getData().getAccessToken(), TestConstants.ACCESS_TOKEN);
     }
 
     @Test

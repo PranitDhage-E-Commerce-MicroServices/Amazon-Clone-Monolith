@@ -8,10 +8,6 @@ import com.web.ecomm.app.pojo.User;
 
 public class TestUtils {
 
-    public static String ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmFuaXRAZ21haWwuY29tIiwiaWF0IjoxNzA2NzIwOTU0LCJleHAiOjE3MDY4MDczNTR9.EBaJR38KTHymIWYH3zmufy1p-9KAhNZDCz_nDpG4IP";
-
-    public static String REFRESH_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmFuaXRAZ21haWwuY29tIiwiaWF0IjoxNzA2NzIwOTU0LCJleHAiOjE3MDY4MDczNTR9.EBaJR38KTHymIWYH3zmufy1p-9KAhNZDCz_nDpG4IP";
-
     public static User getUser() {
 
         return User.builder()
@@ -35,8 +31,8 @@ public class TestUtils {
     public static AuthenticationResponse getAuthenticationResponse() {
 
         return AuthenticationResponse.builder()
-                .accessToken(ACCESS_TOKEN)
-                .refreshToken(ACCESS_TOKEN)
+                .accessToken(TestConstants.ACCESS_TOKEN)
+                .refreshToken(TestConstants.ACCESS_TOKEN)
                 .build();
     }
 
