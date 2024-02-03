@@ -21,7 +21,6 @@ import com.web.ecomm.app.utils.Constants;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,20 +38,19 @@ import java.util.Optional;
 @Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
-    private UserRepository userRepo;
+    final private UserRepository userRepo;
 
-    private CredentialsRepository credentialsRepo;
+    final private CredentialsRepository credentialsRepo;
 
-    private JwtService jwtService;
+    final private JwtService jwtService;
 
-    private AuthenticationManager authenticationManager;
+    final private AuthenticationManager authenticationManager;
 
-    private PasswordEncoder passwordEncoder;
+    final private PasswordEncoder passwordEncoder;
 
-    private TokenRepository tokenRepository;
+    final private TokenRepository tokenRepository;
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepo,

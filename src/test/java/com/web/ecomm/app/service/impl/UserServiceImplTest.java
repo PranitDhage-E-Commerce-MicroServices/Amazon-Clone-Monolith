@@ -27,8 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 @RunWith(MockitoJUnitRunner.class)
 class UserServiceImplTest extends TestCase {
 
@@ -84,20 +82,6 @@ class UserServiceImplTest extends TestCase {
         assertEquals(auth.getUserId(), TestConstants.USER_ID);
         assertEquals(auth.getEmail(), TestConstants.EMAIL);
         assertEquals(auth.getPassword(), TestConstants.PASSWORD);
-    }
-
-//    @Test
-    void addNewAuthException() {
-
-        Credentials credentials = TestUtils.getCredentials();
-
-        Mockito.when(credentialsRepo.save(credentials))
-                .thenThrow(Exception.class);
-
-        assertThrows(
-                BusinessException.class,
-                () -> userService.addNewAuth(credentials)
-        );
     }
 
     @Test
