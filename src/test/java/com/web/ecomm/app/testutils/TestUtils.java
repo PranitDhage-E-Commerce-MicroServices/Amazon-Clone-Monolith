@@ -5,6 +5,8 @@ import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
 import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
+import com.web.ecomm.app.token.Token;
+import com.web.ecomm.app.token.TokenType;
 
 public class TestUtils {
 
@@ -42,6 +44,17 @@ public class TestUtils {
                 .userId(1)
                 .email("test@gmail.com")
                 .password("Password@12345")
+                .build();
+    }
+
+    public static Token getToken() {
+
+        return Token.builder()
+                .user(getUser())
+                .token(TestConstants.ACCESS_TOKEN)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
                 .build();
     }
 }

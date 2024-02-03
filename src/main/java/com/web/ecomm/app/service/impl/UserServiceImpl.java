@@ -92,7 +92,7 @@ public class UserServiceImpl implements IUserService {
             User savedUser = userRepo.save(user);
 
             String jwtToken = jwtService.generateToken(savedUser);
-            var refreshToken = jwtService.generateRefreshToken(savedUser);
+            String refreshToken = jwtService.generateRefreshToken(savedUser);
             revokeAllUserTokens(savedUser);
             saveUserToken(savedUser, jwtToken);
 
@@ -126,7 +126,7 @@ public class UserServiceImpl implements IUserService {
                     .get();
 
             String jwtToken = jwtService.generateToken(user);
-            var refreshToken = jwtService.generateRefreshToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
             revokeAllUserTokens(user);
             saveUserToken(user, jwtToken);
             return AuthenticationResponse.builder()
@@ -221,37 +221,37 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
-    private void saveUserToken(User user, String jwtToken) throws BusinessException {
+    public Token saveUserToken(User user, String jwtToken) throws BusinessException {
 
         try {
-            var token = Token.builder()
+            Token token = Token.builder()
                     .user(user)
                     .token(jwtToken)
                     .tokenType(TokenType.BEARER)
                     .expired(false)
                     .revoked(false)
                     .build();
-            tokenRepository.save(token);
+            return tokenRepository.save(token);
         } catch (Exception e) {
             throw new BusinessException(e.getMessage(), Constants.ERR_BUSINESS);
         }
     }
 
-    private void revokeAllUserTokens(User user) throws BusinessException {
+    public List<Token> revokeAllUserTokens(User user) throws BusinessException {
 
         try {
 
             List<Token> validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
 
             if (validUserTokens.isEmpty())
-                return;
+                return null;
 
             validUserTokens.forEach(token -> {
                 token.setExpired(true);
                 token.setRevoked(true);
             });
 
-            tokenRepository.saveAll(validUserTokens);
+            return tokenRepository.saveAll(validUserTokens);
 //            tokenRepository.deleteAll(validUserTokens);
 
         } catch (Exception e) {

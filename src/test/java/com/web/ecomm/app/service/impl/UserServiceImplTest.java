@@ -1,14 +1,18 @@
 package com.web.ecomm.app.service.impl;
 
 import com.web.ecomm.app.exceptions.BusinessException;
+import com.web.ecomm.app.exceptions.ResourceNotFoundException;
+import com.web.ecomm.app.exceptions.SystemException;
 import com.web.ecomm.app.models.response.AuthenticationResponse;
 import com.web.ecomm.app.pojo.Credentials;
+import com.web.ecomm.app.pojo.Role;
 import com.web.ecomm.app.pojo.User;
 import com.web.ecomm.app.repository.CredentialsRepository;
 import com.web.ecomm.app.repository.UserRepository;
 import com.web.ecomm.app.security.JwtService;
 import com.web.ecomm.app.testutils.TestConstants;
 import com.web.ecomm.app.testutils.TestUtils;
+import com.web.ecomm.app.token.Token;
 import com.web.ecomm.app.token.TokenRepository;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.AfterEach;
@@ -92,27 +96,6 @@ class UserServiceImplTest extends TestCase {
         assertEquals(auth.getPassword(), TestConstants.PASSWORD);
     }
 
-    //    @Test
-    void addNewAuthException() throws BusinessException {
-
-        Credentials credentials = TestUtils.getCredentials();
-
-        Mockito.when(
-                        credentialsRepo.save(
-                                ArgumentMatchers.any(Credentials.class)
-                        )
-                )
-                .thenReturn(credentials);
-
-        assertThrows(
-                BusinessException.class,
-                () -> userService.addNewAuth(credentials),
-                "Failed to add new auth"
-        );
-
-    }
-
-
     @Test
     void userSignup() throws BusinessException {
 
@@ -136,6 +119,9 @@ class UserServiceImplTest extends TestCase {
         Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
                 .thenReturn(new ArrayList<>());
 
+        Mockito.when(tokenRepository.save(ArgumentMatchers.any(Token.class)))
+                .thenReturn(TestUtils.getToken());
+
         AuthenticationResponse response = userService.userSignup(user);
 
         assertNotNull(response);
@@ -145,15 +131,78 @@ class UserServiceImplTest extends TestCase {
     }
 
     @Test
-    void userSignIn() {
+    void userSignIn() throws BusinessException {
+
+        Mockito.when(userRepo.findByEmail(ArgumentMatchers.anyString()))
+                .thenReturn(Optional.ofNullable(TestUtils.getUser()));
+
+        Mockito.when(jwtService.generateToken(ArgumentMatchers.any(User.class)))
+                .thenReturn(TestConstants.ACCESS_TOKEN);
+
+        Mockito.when(jwtService.generateRefreshToken(ArgumentMatchers.any(User.class)))
+                .thenReturn(TestConstants.REFRESH_TOKEN);
+
+        Mockito.when(tokenRepository.findAllValidTokenByUser(TestConstants.USER_ID))
+                .thenReturn(new ArrayList<>());
+
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+                .thenReturn(new ArrayList<>());
+
+        Mockito.when(tokenRepository.save(ArgumentMatchers.any(Token.class)))
+                .thenReturn(TestUtils.getToken());
+
+        AuthenticationResponse response = userService.userSignIn(TestUtils.getSignInRequest());
+
+        assertNotNull(response);
+        assertEquals(response.getAccessToken(), TestConstants.ACCESS_TOKEN);
+        assertEquals(response.getRefreshToken(), TestConstants.REFRESH_TOKEN);
+
     }
 
     @Test
-    void changeUserActiveStatus() {
+    void changeUserActiveStatus() throws BusinessException, SystemException {
+
+        User user = TestUtils.getUser();
+
+        Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                .thenReturn(Optional.ofNullable(user));
+
+        Mockito.when(userRepo.save(ArgumentMatchers.any(User.class)))
+                .thenReturn(user);
+
+        boolean activeStatus = userService.changeUserActiveStatus(
+                TestConstants.USER_ID, TestConstants.STATUS_ACTIVE
+        );
+
+        assertTrue(activeStatus);
+
     }
 
     @Test
-    void getAllUserCount() {
+    void changeUserActiveStatusResourceNotFoundException() throws BusinessException, SystemException {
+
+        Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                .thenThrow(ResourceNotFoundException.class);
+
+        assertThrows(
+                BusinessException.class,
+                () -> userService.changeUserActiveStatus(
+                        TestConstants.USER_ID, TestConstants.STATUS_ACTIVE
+                ),
+                "User  not found for given user Id : " + TestConstants.USER_ID
+        );
+    }
+
+
+    @Test
+    void getAllUserCount() throws BusinessException, SystemException {
+
+        List<User> userList = List.of(TestUtils.getUser());
+
+        Mockito.when(userRepo.findAll()).thenReturn(userList);
+
+        int count = userService.getAllUserCount();
+        assertEquals(userList.size(), count);
     }
 
     @Test
@@ -176,7 +225,7 @@ class UserServiceImplTest extends TestCase {
     }
 
     @Test
-    void getProfileException() {
+    void getProfileBusinessException() {
 
         Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
                 .thenReturn(null);
@@ -186,18 +235,87 @@ class UserServiceImplTest extends TestCase {
                 () -> userService.getProfile(TestConstants.USER_ID),
                 "User  not found for given user Id : " + TestConstants.USER_ID
         );
-
     }
 
     @Test
-    void userUpdate() {
+    void getProfileResourceNotFoundException() {
+
+        Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                .thenThrow(ResourceNotFoundException.class);
+
+        assertThrows(
+                BusinessException.class,
+                () -> userService.getProfile(TestConstants.USER_ID),
+                "User  not found for given user Id : " + TestConstants.USER_ID
+        );
     }
 
     @Test
-    void getUsersListAll() {
+    void userUpdate() throws BusinessException {
+
+        User user = TestUtils.getUser();
+
+        Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                .thenReturn(Optional.ofNullable(user));
+
+        Mockito.when(userRepo.save(ArgumentMatchers.any(User.class)))
+                .thenReturn(user);
+
+        User updatedUser = userService.userUpdate(TestConstants.USER_ID, user);
+
+        assertNotNull(updatedUser);
+        assert user != null;
+        assertEquals(user.getEmail(), updatedUser.getEmail());
     }
 
     @Test
-    void refreshToken() {
+    void getUsersListAll() throws BusinessException {
+
+        List<User> userList = List.of(TestUtils.getUser());
+
+        Mockito.when(userRepo.findAllByRole(ArgumentMatchers.any(Role.class)))
+                .thenReturn(userList);
+
+        List<User> listAll = userService.getUsersListAll();
+
+        assertNotNull(listAll);
+        assertEquals(userList.size(), listAll.size());
     }
+
+    @Test
+    void saveUserToken() throws BusinessException {
+
+        Token token = TestUtils.getToken();
+        User user = TestUtils.getUser();
+
+        Mockito.when(tokenRepository.save(ArgumentMatchers.any(Token.class)))
+                .thenReturn(token);
+
+        Token savedToken = userService.saveUserToken(
+                user, TestConstants.ACCESS_TOKEN
+        );
+
+        assertNotNull(savedToken);
+    }
+
+    @Test
+    void revokeAllUserTokens() throws BusinessException {
+
+        Token token = TestUtils.getToken();
+        List<Token> tokenList = List.of(token);
+        User user = TestUtils.getUser();
+
+        Mockito.when(tokenRepository.findAllValidTokenByUser(ArgumentMatchers.anyInt()))
+                .thenReturn(tokenList);
+
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+                .thenReturn(tokenList);
+
+        List<Token> revokedTokens = userService.revokeAllUserTokens(user);
+
+        assertNotNull(revokedTokens);
+        assertEquals(tokenList.size(), revokedTokens.size());
+
+    }
+
 }

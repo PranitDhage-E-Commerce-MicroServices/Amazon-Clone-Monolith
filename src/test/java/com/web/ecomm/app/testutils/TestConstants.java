@@ -14,4 +14,8 @@ public interface TestConstants {
 
     public static String REFRESH_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwcmFuaXRAZ21haWwuY29tIiwiaWF0IjoxNzA2NzIwOTU0LCJleHAiOjE3MDY4MDczNTR9.EBaJR38KTHymIWYH3zmufy1p-9KAhNZDCz_nDpG4IP";
 
+    Integer STATUS_ACTIVE = 1;
+
+    Integer STATUS_INACTIVE = 0;
+
 }
