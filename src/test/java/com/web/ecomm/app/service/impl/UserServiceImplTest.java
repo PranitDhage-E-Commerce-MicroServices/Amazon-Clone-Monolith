@@ -23,21 +23,28 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @RunWith(MockitoJUnitRunner.class)
 class UserServiceImplTest extends TestCase {
 
+    private MockMvc mockMvc;
+
     @InjectMocks
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     @Mock
-    UserRepository userRepo;
+    private UserRepository userRepo;
 
     @Mock
-    CredentialsRepository credentialsRepo;
+    private CredentialsRepository credentialsRepo;
 
     @Mock
     private JwtService jwtService;
@@ -56,6 +63,7 @@ class UserServiceImplTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.openMocks(this);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userService).build();
     }
 
     @AfterEach
@@ -83,6 +91,27 @@ class UserServiceImplTest extends TestCase {
         assertEquals(auth.getEmail(), TestConstants.EMAIL);
         assertEquals(auth.getPassword(), TestConstants.PASSWORD);
     }
+
+    //    @Test
+    void addNewAuthException() throws BusinessException {
+
+        Credentials credentials = TestUtils.getCredentials();
+
+        Mockito.when(
+                        credentialsRepo.save(
+                                ArgumentMatchers.any(Credentials.class)
+                        )
+                )
+                .thenReturn(credentials);
+
+        assertThrows(
+                BusinessException.class,
+                () -> userService.addNewAuth(credentials),
+                "Failed to add new auth"
+        );
+
+    }
+
 
     @Test
     void userSignup() throws BusinessException {
@@ -129,6 +158,35 @@ class UserServiceImplTest extends TestCase {
 
     @Test
     void getProfile() {
+
+        try {
+
+            User user = TestUtils.getUser();
+
+            Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                    .thenReturn(Optional.ofNullable(user));
+
+            User profile = userService.getProfile(TestConstants.USER_ID);
+
+            assertNotNull(profile);
+            assertEquals(user.getUserId(), profile.getUserId());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
+    void getProfileException() {
+
+        Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
+                .thenReturn(null);
+
+        assertThrows(
+                BusinessException.class,
+                () -> userService.getProfile(TestConstants.USER_ID),
+                "User  not found for given user Id : " + TestConstants.USER_ID
+        );
+
     }
 
     @Test
