@@ -20,7 +20,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: false
-    database: mysql
+    database: MYSQL
     database-platform: org.hibernate.dialect.MySQL8Dialect
   # Spring Security Basic Auth
   security:
