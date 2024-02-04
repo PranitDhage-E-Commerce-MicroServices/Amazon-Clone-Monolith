@@ -23,6 +23,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.xml.bind.ValidationException;
 
@@ -43,6 +45,7 @@ class UserControllerTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.openMocks(this);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @AfterEach
@@ -94,11 +97,7 @@ class UserControllerTest extends TestCase {
         User user = TestUtils.getUser();
         Integer id = 1;
 
-        Mockito.when(
-                        userService.getProfile(
-                                ArgumentMatchers.anyInt()
-                        )
-                )
+        Mockito.when(userService.getProfile(ArgumentMatchers.anyInt()))
                 .thenReturn(user);
 
         ResponseEntity<APIResponseEntity<User>> response = userController.getUserProfile(id);
@@ -119,10 +118,8 @@ class UserControllerTest extends TestCase {
         User user = TestUtils.getUser();
         String id = "1";
 
-        Mockito.when(
-                        userService.userUpdate(
-                                ArgumentMatchers.anyInt(),
-                                ArgumentMatchers.any(User.class)
+        Mockito.when(userService.userUpdate(
+                                ArgumentMatchers.anyInt(), ArgumentMatchers.any(User.class)
                         )
                 )
                 .thenReturn(user);

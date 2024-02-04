@@ -39,8 +39,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @RunWith(MockitoJUnitRunner.class)
 class UserServiceImplTest extends TestCase {
 
-    private MockMvc mockMvc;
-
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -67,7 +65,7 @@ class UserServiceImplTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         MockitoAnnotations.openMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userService).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(userService).build();
     }
 
     @AfterEach
@@ -116,7 +114,7 @@ class UserServiceImplTest extends TestCase {
         Mockito.when(tokenRepository.findAllValidTokenByUser(TestConstants.USER_ID))
                 .thenReturn(new ArrayList<>());
 
-        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.anyList()))
                 .thenReturn(new ArrayList<>());
 
         Mockito.when(tokenRepository.save(ArgumentMatchers.any(Token.class)))
@@ -145,7 +143,7 @@ class UserServiceImplTest extends TestCase {
         Mockito.when(tokenRepository.findAllValidTokenByUser(TestConstants.USER_ID))
                 .thenReturn(new ArrayList<>());
 
-        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.anyList()))
                 .thenReturn(new ArrayList<>());
 
         Mockito.when(tokenRepository.save(ArgumentMatchers.any(Token.class)))
@@ -179,7 +177,7 @@ class UserServiceImplTest extends TestCase {
     }
 
     @Test
-    void changeUserActiveStatusResourceNotFoundException() throws BusinessException, SystemException {
+    void changeUserActiveStatusResourceNotFoundException() {
 
         Mockito.when(userRepo.findById(ArgumentMatchers.anyInt()))
                 .thenThrow(ResourceNotFoundException.class);
@@ -218,6 +216,7 @@ class UserServiceImplTest extends TestCase {
             User profile = userService.getProfile(TestConstants.USER_ID);
 
             assertNotNull(profile);
+            assert user != null;
             assertEquals(user.getUserId(), profile.getUserId());
         } catch (Exception e) {
             fail();
@@ -308,7 +307,7 @@ class UserServiceImplTest extends TestCase {
         Mockito.when(tokenRepository.findAllValidTokenByUser(ArgumentMatchers.anyInt()))
                 .thenReturn(tokenList);
 
-        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.any(List.class)))
+        Mockito.when(tokenRepository.saveAll(ArgumentMatchers.anyList()))
                 .thenReturn(tokenList);
 
         List<Token> revokedTokens = userService.revokeAllUserTokens(user);
