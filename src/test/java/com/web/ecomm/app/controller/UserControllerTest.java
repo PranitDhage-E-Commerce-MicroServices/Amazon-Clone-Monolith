@@ -116,7 +116,7 @@ class UserControllerTest extends TestCase {
     void updateUserProfile() throws BusinessException, ValidationException, SystemException {
 
         User user = TestUtils.getUser();
-        String id = "1";
+        Integer id = 1;
 
         Mockito.when(userService.userUpdate(
                                 ArgumentMatchers.anyInt(), ArgumentMatchers.any(User.class)
@@ -131,7 +131,7 @@ class UserControllerTest extends TestCase {
         assertEquals(responseBody.getCode(), Constants.SUCCESS_CODE);
         assertEquals(responseBody.getStatus(), Constants.STATUS_SUCCESS);
         assertEquals(
-                String.valueOf(responseBody.getData().getUserId()),
+                responseBody.getData().getUserId(),
                 id
         );
     }

@@ -211,13 +211,13 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<APIResponseEntity<User>> updateUserProfile(
-            @Parameter(description = "User Identifier", required = true) @PathVariable String id,
+            @Parameter(description = "User Identifier", required = true) @PathVariable int id,
             @Parameter(description = "User Request", required = true) @RequestBody @Valid User user
     ) throws BusinessException, SystemException, ValidationException {
 
         log.info("Updating User Profile for given User Id: {}, Request: {} ", id, user);
 
-        User updatedUser = userService.userUpdate(Integer.parseInt(id), user);
+        User updatedUser = userService.userUpdate(id, user);
 
         APIResponseEntity<User> response = new APIResponseEntity<>(
                 Constants.STATUS_SUCCESS,
