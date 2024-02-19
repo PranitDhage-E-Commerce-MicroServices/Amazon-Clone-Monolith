@@ -51,7 +51,7 @@ public class ProductReviewController {
      */
     @Operation(summary = "Get all the Product Review List for given Product Id",
             description = "This API is used to Get all the Product Review List for given Product Id",
-            tags = {"Checks"},
+            tags = {"Product Review"},
             method = "GET"
     )
     @ApiResponses(
@@ -94,7 +94,7 @@ public class ProductReviewController {
      */
     @Operation(summary = "Get all the Product Review Average for given Product Id",
             description = "This API is used to Get all the Product Review Average for given Product Id",
-            tags = {"Checks"},
+            tags = {"Product Review"},
             method = "GET"
     )
     @ApiResponses(
@@ -138,7 +138,7 @@ public class ProductReviewController {
      */
     @Operation(summary = "Saves new Review for given user",
             description = "This API is used to save new Review for the User",
-            tags = {"Checks"},
+            tags = {"Product Review"},
             method = "POST"
     )
     @ApiResponses(

@@ -73,7 +73,7 @@ public class AdminController {
      */
     @Operation(summary = "Get all the users for admin",
             description = "This API is used to get all the users for admin",
-            tags = {"Checks"},
+            tags = {"Admin"},
             method = "GET"
     )
     @ApiResponses(
@@ -114,7 +114,7 @@ public class AdminController {
      */
     @Operation(summary = "Change User Active Status",
             description = "This API is used to Change User Active Status",
-            tags = {"Checks"},
+            tags = {"Admin"},
             method = "PUT"
     )
     @ApiResponses(
@@ -158,7 +158,7 @@ public class AdminController {
      */
     @Operation(summary = "Get all user orders",
             description = "This API is used to get all user orders",
-            tags = {"Checks"},
+            tags = {"Admin"},
             method = "GET"
     )
     @ApiResponses(
@@ -199,7 +199,7 @@ public class AdminController {
      */
     @Operation(summary = "Change user order delivery status for given MyOrder identifier",
             description = "This API is used to change user order delivery status",
-            tags = {"Checks"},
+            tags = {"Admin"},
             method = "PUT"
     )
     @ApiResponses(
@@ -242,7 +242,7 @@ public class AdminController {
      */
     @Operation(summary = "Get all dashboard count for admin",
             description = "This API is used to get all dashboard count for admin",
-            tags = {"Checks"},
+            tags = {"Admin"},
             method = "GET"
     )
     @ApiResponses(

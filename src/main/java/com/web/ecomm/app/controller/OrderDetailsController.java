@@ -49,7 +49,7 @@ public class OrderDetailsController {
      */
     @Operation(summary = " Get Order Details List for given Order id",
             description = "This API is used to  Get Order Details List for given Order id",
-            tags = {"Checks"},
+            tags = {"Order Details"},
             method = "GET"
     )
     @ApiResponses(

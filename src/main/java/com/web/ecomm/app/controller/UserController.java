@@ -62,7 +62,7 @@ public class UserController {
      */
     @Operation(summary = "User Login",
             description = "This API is used to Login User",
-            tags = {"Checks"},
+            tags = {"User"},
             method = "POST"
     )
     @ApiResponses(
@@ -106,7 +106,7 @@ public class UserController {
      */
     @Operation(summary = "User Signup",
             description = "This API is used to Signup New User",
-            tags = {"Checks"},
+            tags = {"User"},
             method = "POST"
     )
     @ApiResponses(
@@ -149,7 +149,7 @@ public class UserController {
      */
     @Operation(summary = "Get User Profile for given user",
             description = "This API is used to Get User Profile for given user Id",
-            tags = {"Checks"},
+            tags = {"User"},
             method = "GET"
     )
     @ApiResponses(
@@ -194,7 +194,7 @@ public class UserController {
      */
     @Operation(summary = "Updates User Details for given address Id",
             description = "This API is used to Updates User Details for given address Id",
-            tags = {"Checks"},
+            tags = {"User"},
             method = "PUT"
     )
     @ApiResponses(
@@ -239,7 +239,7 @@ public class UserController {
      */
     @Operation(summary = "Logout User and invalidate JWT Token",
             description = "This API is used to Logout User and invalidate JWT Token",
-            tags = {"Checks"},
+            tags = {"User"},
             method = "PUT"
     )
     @ApiResponses(

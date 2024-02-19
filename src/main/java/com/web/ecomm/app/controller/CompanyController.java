@@ -53,7 +53,7 @@ public class CompanyController {
      */
     @Operation(summary = "Get all the Company List for Admin",
             description = "This API is used to get all the Company List for Admin",
-            tags = {"Checks"},
+            tags = {"Company"},
             method = "GET"
     )
     @ApiResponses(
@@ -93,7 +93,7 @@ public class CompanyController {
      */
     @Operation(summary = "Get the Company Details By Company Id for Admin",
             description = "This API is used to get the Company Details By Company Id for Admin",
-            tags = {"Checks"},
+            tags = {"Company"},
             method = "GET"
     )
     @ApiResponses(
@@ -137,7 +137,7 @@ public class CompanyController {
      */
     @Operation(summary = "Saves new Company for Admin",
             description = "This API is used to save new Company for Admin",
-            tags = {"Checks"},
+            tags = {"Company"},
             method = "POST"
     )
     @ApiResponses(
@@ -182,7 +182,7 @@ public class CompanyController {
      */
     @Operation(summary = "Updates Company for given Company Id By Admin",
             description = "This API is used to Updates Company for given Company Id By Admin",
-            tags = {"Checks"},
+            tags = {"Company"},
             method = "PUT"
     )
     @ApiResponses(
@@ -228,7 +228,7 @@ public class CompanyController {
      */
     @Operation(summary = "Deletes Company for given Company Id",
             description = "This API is used to delete Company for given Company Id",
-            tags = {"Checks"},
+            tags = {"Company"},
             method = "DELETE"
     )
     @ApiResponses(

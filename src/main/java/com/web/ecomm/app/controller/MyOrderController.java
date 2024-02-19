@@ -53,7 +53,7 @@ public class MyOrderController {
      */
     @Operation(summary = "Get all the User Order List for given user",
             description = "This API is used to Get all the User Order List for given user",
-            tags = {"Checks"},
+            tags = {"My Orders"},
             method = "GET"
     )
     @ApiResponses(
@@ -94,7 +94,7 @@ public class MyOrderController {
      */
     @Operation(summary = "Get all the MyOrder for given user",
             description = "This API is used to get all the MyOrder for the User with given userId",
-            tags = {"Checks"},
+            tags = {"My Orders"},
             method = "GET"
     )
     @ApiResponses(
@@ -139,7 +139,7 @@ public class MyOrderController {
      */
     @Operation(summary = "Checkout My Order for given user",
             description = "This API is used to Checkout My Order for given user",
-            tags = {"Checks"},
+            tags = {"My Orders"},
             method = "POST"
     )
     @ApiResponses(
@@ -184,7 +184,7 @@ public class MyOrderController {
      */
     @Operation(summary = "Updates MyOrder Status for given MyOrder Id",
             description = "This API is used to Updates MyOrder Status for given MyOrder Id",
-            tags = {"Checks"},
+            tags = {"My Orders"},
             method = "PUT"
     )
     @ApiResponses(
@@ -228,7 +228,7 @@ public class MyOrderController {
      */
     @Operation(summary = "Deletes MyOrder for given MyOrder Id",
             description = "This API is used to delete MyOrder for given MyOrder Id",
-            tags = {"Checks"},
+            tags = {"My Orders"},
             method = "DELETE"
     )
     @ApiResponses(

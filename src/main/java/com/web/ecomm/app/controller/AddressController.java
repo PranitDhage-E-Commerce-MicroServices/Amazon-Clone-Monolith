@@ -58,7 +58,7 @@ public class AddressController {
      */
     @Operation(summary = "Get all the addresses for given user",
             description = "This API is used to get all the addresses for the User with given userId",
-            tags = {"Checks"},
+            tags = {"Address"},
             method = "GET"
     )
     @ApiResponses(
@@ -103,7 +103,7 @@ public class AddressController {
      */
     @Operation(summary = "Saves new address for given user",
             description = "This API is used to save new address for the User with given userId",
-            tags = {"Checks"},
+            tags = {"Address"},
             method = "POST"
     )
     @ApiResponses(
@@ -148,7 +148,7 @@ public class AddressController {
      */
     @Operation(summary = "Updates address for given address Id",
             description = "This API is used to Updates address for given address Id",
-            tags = {"Checks"},
+            tags = {"Address"},
             method = "PUT"
     )
     @ApiResponses(
@@ -192,7 +192,7 @@ public class AddressController {
      */
     @Operation(summary = "Deletes address for given address Id",
             description = "This API is used to delete address for given address Id",
-            tags = {"Checks"},
+            tags = {"Address"},
             method = "DELETE"
     )
     @ApiResponses(

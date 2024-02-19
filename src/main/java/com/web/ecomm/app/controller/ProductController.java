@@ -56,7 +56,7 @@ public class ProductController {
      */
     @Operation(summary = "Get all the Product List for Admin",
             description = "This API is used to Get all the Product List for Admin",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "GET"
     )
     @ApiResponses(
@@ -95,7 +95,7 @@ public class ProductController {
      */
     @Operation(summary = "Get all the Gallery Product List",
             description = "This API is used to Get all the Gallery Product List",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "GET"
     )
     @ApiResponses(
@@ -134,7 +134,7 @@ public class ProductController {
      */
     @Operation(summary = "Get all the Product Details for given Product Id",
             description = "This API is used to Get all the Product Details for given Product Id",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "GET"
     )
     @ApiResponses(
@@ -178,7 +178,7 @@ public class ProductController {
      */
     @Operation(summary = "Saves new Product for Admin",
             description = "This API is used to Saves new Product for Admin",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "POST"
     )
     @ApiResponses(
@@ -222,7 +222,7 @@ public class ProductController {
      */
     @Operation(summary = "Updates Product for Given Product Id for Admin",
             description = "This API is used to Updates Product for Given Product Id for Admin",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "PUT"
     )
     @ApiResponses(
@@ -265,7 +265,7 @@ public class ProductController {
      */
     @Operation(summary = "Deletes Product for given Product Id",
             description = "This API is used to delete Product for given Product Id",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "DELETE"
     )
     @ApiResponses(
@@ -310,7 +310,7 @@ public class ProductController {
      */
     @Operation(summary = "Changes Product Active Status for Given Product Id for Admin",
             description = "This API is used to Changes Product Active Status for Given Product Id for Admin",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "PUT"
     )
     @ApiResponses(
@@ -356,7 +356,7 @@ public class ProductController {
      */
     @Operation(summary = "Get Product Image for given Photo Name",
             description = "This API is used to Get Product Image for given Photo Name",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "GET"
     )
     @ApiResponses(
@@ -401,7 +401,7 @@ public class ProductController {
      */
     @Operation(summary = "Upload Product Image for Given Product Id for Admin",
             description = "This API is used to Upload Product Image for Given Product Id for Admin",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "PUT"
     )
     @ApiResponses(
@@ -445,7 +445,7 @@ public class ProductController {
      */
     @Operation(summary = "Deletes Product Image for given Product Id",
             description = "This API is used to delete Product Image for given Product Id",
-            tags = {"Checks"},
+            tags = {"Products"},
             method = "DELETE"
     )
     @ApiResponses(

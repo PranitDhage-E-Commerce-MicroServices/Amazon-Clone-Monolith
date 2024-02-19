@@ -54,7 +54,7 @@ public class CartController {
      */
     @Operation(summary = "Get all the Card Items for given User",
             description = "This API is used to get all the Card Items for given User",
-            tags = {"Checks"},
+            tags = {"Cart"},
             method = "GET"
     )
     @ApiResponses(
@@ -95,7 +95,7 @@ public class CartController {
      */
     @Operation(summary = "Saves new address for given user",
             description = "This API is used to save new address for the User with given userId",
-            tags = {"Checks"},
+            tags = {"Cart"},
             method = "POST"
     )
     @ApiResponses(
@@ -141,7 +141,7 @@ public class CartController {
      */
     @Operation(summary = "Updates Cart Item Quantity for given card Id",
             description = "This API is used to Updates Cart Item Quantity for given card Id",
-            tags = {"Checks"},
+            tags = {"Cart"},
             method = "PUT"
     )
     @ApiResponses(
@@ -189,7 +189,7 @@ public class CartController {
      */
     @Operation(summary = "Deletes Card Items for given Cart Id",
             description = "This API is used to deletes Card Items for given Cart Id",
-            tags = {"Checks"},
+            tags = {"Cart"},
             method = "DELETE"
     )
     @ApiResponses(
@@ -231,7 +231,7 @@ public class CartController {
      */
     @Operation(summary = "Deletes All Card Items for given user Id",
             description = "This API is used to deletes all Card Items for given user Id",
-            tags = {"Checks"},
+            tags = {"Cart"},
             method = "DELETE"
     )
     @ApiResponses(

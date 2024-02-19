@@ -53,7 +53,7 @@ public class CategoryController {
      */
     @Operation(summary = "Get all the Categories for Admin",
             description = "This API is used to get all the Categories for Admin",
-            tags = {"Checks"},
+            tags = {"Category"},
             method = "GET"
     )
     @ApiResponses(
@@ -93,7 +93,7 @@ public class CategoryController {
      */
     @Operation(summary = "Get Category Details By Id for Admin",
             description = "This API is used to get Category Details By Id for Admin",
-            tags = {"Checks"},
+            tags = {"Category"},
             method = "GET"
     )
     @ApiResponses(
@@ -137,7 +137,7 @@ public class CategoryController {
      */
     @Operation(summary = "Saves new category for Admin",
             description = "This API is used to save new category for Admin",
-            tags = {"Checks"},
+            tags = {"Category"},
             method = "POST"
     )
     @ApiResponses(
@@ -182,7 +182,7 @@ public class CategoryController {
      */
     @Operation(summary = "Updates Category for given Category Id",
             description = "This API is used to Updates Category for given Category Id",
-            tags = {"Checks"},
+            tags = {"Category"},
             method = "PUT"
     )
     @ApiResponses(
@@ -225,7 +225,7 @@ public class CategoryController {
      */
     @Operation(summary = "Deletes Category for given Category Id",
             description = "This API is used to delete Category for given Category Id",
-            tags = {"Checks"},
+            tags = {"Category"},
             method = "DELETE"
     )
     @ApiResponses(
