@@ -3,6 +3,7 @@ server:
   port: 8080
   servlet:
     context-path: /api/v1
+  forward-headers-strategy: framework
 
 #DB properties
 spring:
@@ -54,3 +55,11 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    url: /v3/api-docs
+    enabled: true
+    default-model-expand-depth: -1
+  packages-to-scan: com.web.ecomm.app.controller

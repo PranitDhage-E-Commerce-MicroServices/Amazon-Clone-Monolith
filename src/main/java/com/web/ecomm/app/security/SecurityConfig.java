@@ -28,11 +28,13 @@ public class SecurityConfig {
             "/user/signup",
             "/swagger-resources",
             "/swagger-resources/**",
+            "/swagger-ui/index.html",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
             "/configuration/ui",
             "/configuration/security",
-            "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"};
+    };
 
     ApplicationConfig applicationConfig;
 
