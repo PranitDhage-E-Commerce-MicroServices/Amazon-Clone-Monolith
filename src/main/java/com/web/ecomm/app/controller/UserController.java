@@ -207,7 +207,7 @@ public class UserController {
             }
     )
     @PutMapping(
-            value = "/Update-profile/{id}",
+            value = "/update-profile/{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<APIResponseEntity<User>> updateUserProfile(

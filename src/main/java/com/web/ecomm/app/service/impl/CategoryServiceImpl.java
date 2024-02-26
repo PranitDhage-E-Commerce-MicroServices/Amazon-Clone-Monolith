@@ -12,6 +12,10 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +23,7 @@ import java.util.List;
 @Slf4j
 @Service
 @Transactional
+@CacheConfig(cacheNames = Constants.CATEGORY)
 public class CategoryServiceImpl implements ICategoryService {
 
     private final CategoryRepository categoryRepo;
@@ -29,6 +34,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @Cacheable(value = Constants.CATEGORY)
     public List<Category> getAllCategories()
             throws SystemException, BusinessException {
 
@@ -41,6 +47,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @Cacheable(value = Constants.CATEGORY, key = "#catId")
     public Category getCategoryDetailsById(int catId)
             throws SystemException, BusinessException {
 
@@ -71,6 +78,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @CachePut(value = Constants.CATEGORY, key = "#catId")
     public Category updateCategory(int catId, Category newCategory)
             throws SystemException, BusinessException, ValidationException {
 
@@ -98,6 +106,7 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    @CacheEvict(value = Constants.CATEGORY, key = "#catId", beforeInvocation = true)
     public boolean deleteCategory(int catId)
             throws SystemException, BusinessException {
 

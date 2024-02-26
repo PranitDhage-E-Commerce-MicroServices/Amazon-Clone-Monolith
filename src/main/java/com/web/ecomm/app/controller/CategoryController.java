@@ -164,7 +164,7 @@ public class CategoryController {
         APIResponseEntity<Category> response = new APIResponseEntity<>(
                 Constants.STATUS_SUCCESS,
                 Constants.SUCCESS_CODE,
-                category
+                cat
         );
 
         return new ResponseEntity<>(response, HttpStatus.OK);

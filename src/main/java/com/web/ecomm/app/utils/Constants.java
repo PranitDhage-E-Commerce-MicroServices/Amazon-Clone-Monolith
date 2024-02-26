@@ -30,4 +30,5 @@ public interface Constants {
 
     // Date Formats
     public static final String DATE_FORMAT_DD_MM_YYYY_HH_MM_SS = "dd-MM-yyyy HH:mm:ss";
+    String CATEGORY = "Category";
 }
