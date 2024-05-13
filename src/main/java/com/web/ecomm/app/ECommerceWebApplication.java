@@ -16,6 +16,6 @@ public class ECommerceWebApplication {
         SpringApplication.run(ECommerceWebApplication.class, args);
 
         Long end = System.currentTimeMillis();
-        log.info("Application Started Successfully in {} seconds", end - start);
+        log.info("Application Started Successfully in {} milliseconds", end - start);
     }
 }

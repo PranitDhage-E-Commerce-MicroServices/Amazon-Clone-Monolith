@@ -2,7 +2,6 @@ package com.web.ecomm.app.repository;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -13,10 +12,12 @@ import javax.sql.DataSource;
 @Setter
 public class AuditConfigRepositoryImpl {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Value("${jdbc.username}")
     private String schemaName;
 
+    public AuditConfigRepositoryImpl(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 }
